@@ -1,77 +1,308 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset='utf-8'>
-
-  <title>SecurusGlobal/Abrupt @ GitHub</title>
-
-  <style type="text/css">
-    body {
-      margin-top: 1.0em;
-      background-color: #000000;
-      font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #ffffff;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-    h1 { font-size: 3.8em; color: #ffffff; margin-bottom: 3px; }
-    h1 .small { font-size: 0.4em; }
-    h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #ffffff; }
-    h3 { text-align: center; color: #ffffff; }
-    a { color: #ffffff; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-    pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-  </style>
-</head>
-
-<body>
-  <a href="http://github.com/SecurusGlobal/Abrupt"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
-
-  <div id="container">
-
-    <div class="download">
-      <a href="http://github.com/SecurusGlobal/Abrupt/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/SecurusGlobal/Abrupt/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-    </div>
-
-    <h1><a href="http://github.com/SecurusGlobal/Abrupt">Abrupt</a>
-      <span class="small">by <a href="http://github.com/SecurusGlobal">SecurusGlobal</a></span></h1>
-
-    <div class="description">
-      Abrupt is a web app penetration framework
-    </div>
-
-    <h2>Authors</h2>
-<p>Thiébaud Weksteen (thiebaud.weksteen@securusglobal.com)<br/>      </p>
-<h2>Contact</h2>
-<p>Securus Global<br/>      </p>
 
 
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/SecurusGlobal/Abrupt/zipball/master">zip</a> or
-      <a href="http://github.com/SecurusGlobal/Abrupt/tarball/master">tar</a> formats.
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to Abrupt’s documentation! &mdash; Abrupt v0.1 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Abrupt v0.1 documentation" href="#" />
+    <link rel="next" title="abrupt.http - HTTP base classes" href="http.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="http.html" title="abrupt.http - HTTP base classes"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">Abrupt v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-abrupt-s-documentation">
+<h1>Welcome to Abrupt&#8217;s documentation!<a class="headerlink" href="#welcome-to-abrupt-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Abrupt is a web app penetration framework. You can use it as a stand-alone
+application or use the provided library to quickly forge your own tool.</p>
+</div>
+<div class="section" id="description">
+<h1>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h1>
+<p>Abrupt integrate all the tools you may need during a penetration testing on a
+web application like a proxy, a request repeater or a fuzzer. This tool is
+largely inspired by the best python tools: scapy for the interactive prompt,
+django model&#8217;s query for extracting and filtering request, etc. If you are a
+python adept, welcome home!</p>
+<p>Of course, Abrupt is open source. Released under the BSD license. For more
+information, see COPYING.</p>
+</div>
+<div class="section" id="requirements">
+<h1>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h1>
+<p>Abrupt is based on python&gt;=2.6. It is not python3 compatible for now. Also to
+have a real experience with it, we highly recommend you to install IPython. By
+default, Abrupt is compatible with HTTPS. For an easier use, we recommend to
+have openssl installed and the openssl command available in the path.</p>
+<p>Abrupt adopt the UNIX philosophy, so set you EDITOR and BROWSER environment
+variables buddy.</p>
+</div>
+<div class="section" id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
+<p>To have a quick view of the power of Abrupt, we have made this quickstart which
+will show you the main functionalities. To start, clone the git repository:</p>
+<div class="highlight-python"><pre>$ git clone git://github.com/SecurusGlobal/Abrupt.git abrupt
+$ cd abrupt
+$ python bin/abrupt
+
+Generating SSL certificate...
+CA certificate : /home/tweksteen/.abrupt/ca.pem
+In [1]:</pre>
+</div>
+<p>The first time you start Abrupt, it will generate a CA certificate. This is
+useful to avoid the exception creation whenever you reach a HTTPS site with the
+proxy enabled. You can install this certificate in your browser. However, no
+check is performed by Abrupt on the server side regarding ssl.</p>
+<div class="section" id="proxy">
+<h2>Proxy<a class="headerlink" href="#proxy" title="Permalink to this headline">¶</a></h2>
+<p>To start, let&#8217;s grab some HTTP request. To do so, use the <em>p</em> function. It
+starts a new proxy server on port 8080. This server will catch every HTTP(S)
+request and prompt the user for directions:</p>
+<div class="highlight-python"><pre>In [1]: p()
+Ctrl-C to interrupt the proxy...</pre>
+</div>
+<p>You can now configure your browser to use <a class="reference external" href="http://localhost:8080">http://localhost:8080</a> as your proxy.
+All the requests will be captured by Abrupt:</p>
+<div class="highlight-python"><pre>&lt;GET www.phrack.org /&gt; ?</pre>
+</div>
+<p>For each request, you can decide what to do:</p>
+<blockquote>
+<div><ul class="simple">
+<li>(v)iew - print the full request</li>
+<li>(e)dit - manually edit the request in your favorite $EDITOR</li>
+<li>(d)rop - drop the request</li>
+<li>(f)orward - Forward the request</li>
+<li>(c)ontinue - Forward this request and the following</li>
+</ul>
+</div></blockquote>
+<p>Forward is the default action if none is passed. Once a request has been made,
+you can see the response status and length:</p>
+<div class="highlight-python"><pre>&lt;GET www.phrack.org /&gt; ? f
+&lt;200 Gzip 5419&gt;</pre>
+</div>
+<p>Once you&#8217;re done with your requests, use Ctrl-C to exit. This function return
+all the completed requests and associated responses in a RequestSet object:</p>
+<div class="highlight-python"><pre>KeyboardInterrupt
+1 request intercepted
+Out[1]: {200:1 | phrack.org}
+
+In [2]: requests = _
+
+In [3]: print requests
+Path Query Status Length
+/    -     200    5419
+
+In [4]: requests[0]
+Out[4]: &lt;GET www.phrack.org /&gt;</pre>
+</div>
+<p>Not all the requests are shown. By default, a filter silently forward all the
+image files (.png, .jpg, .jpeg, .ico, .gif). To see them, you can use:</p>
+<div class="highlight-python"><pre>In [1]: p(filter=None)</pre>
+</div>
+<p>Some other functions exists : <em>w</em>, just display the requests, doesn&#8217;t provided
+any interaction. <em>p1</em> and <em>w1</em>, working as <em>p</em> and <em>w</em> but only intercept one
+request.</p>
+</div>
+<div class="section" id="request-and-response">
+<h2>Request and Response<a class="headerlink" href="#request-and-response" title="Permalink to this headline">¶</a></h2>
+<p>Abrupt have its own representation of HTTP request and response based on
+httplib:</p>
+<div class="highlight-python"><pre>In [5]: r = requests[0]
+In [6]: print r
+GET / HTTP/1.1
+Accept-Language: en-us,en;q=0.5
+Accept-Encoding: gzip,deflate
+Keep-Alive: 115
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.15)
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Host: www.phrack.org
+Proxy-Connection: keep-alive</pre>
+</div>
+<p>Request objects have numerous attributes: hostname, port, headers, path,
+query, url, content. You can create a new request based on another with:</p>
+<div class="highlight-python"><pre>In [7]: new_r = r.edit()</pre>
+</div>
+<p>And execute the new request:</p>
+<div class="highlight-python"><pre>In [8]: new_r()
+
+In [9]: new_r.response
+Out[9]: &lt;200 Gzip 5419&gt;</pre>
+</div>
+<p>Response objects have the attributes: status, reason, headers, content,
+readable_content. You can use the <em>preview</em> method to open a static dump of
+the response in your favorite $BROWSER.</p>
+</div>
+<div class="section" id="requestset">
+<h2>RequestSet<a class="headerlink" href="#requestset" title="Permalink to this headline">¶</a></h2>
+<p>A RequestSet is just a set of requests. Usually, you&#8217;ll have one from a proxy
+method. You can add more requests from another capture session:</p>
+<div class="highlight-python"><pre>In [10]: w()
+Ctrl-C to interrupt the proxy...
+&lt;GET www.cryptome.org /&gt;
+&lt;200 49380&gt;
+1 request intercepted
+
+In [11]: requests += _
+
+In [12]: requests
+Out[12]: {200:2 | phrack.org, www.cryptome.org}</pre>
+</div>
+<p>You can filter the request by any request attributes:</p>
+<div class="highlight-python"><pre>In [13]: requests.filter(hostname="phrack.org")
+Out[13]: {200:1 | phrack.org}</pre>
+</div>
+</div>
+<div class="section" id="injection">
+<h2>Injection<a class="headerlink" href="#injection" title="Permalink to this headline">¶</a></h2>
+<p>From one request, it is possible to generate a batch of request where one or
+many parameters change using the <em>i</em> function</p>
+<div class="highlight-python"><pre>In [14]: r
+Out[14]: &lt;GET phrack.org /issues.html&gt;
+
+In [15]: batch = i(r, issue="default")
+
+In [16]: r
+Out[16]: {unknown:5 | phrack.org}</pre>
+</div>
+<p>In this case, a RequestSet of 5 requests has been generated. <em>i</em> lookup for
+arguments in the query string, the cookie and the post data. You should give
+the name and the list of payloads name as arguments. The list of payloads can
+be found in the payloads/ directory. You can also get the keys of the payloads
+global variables.Before being injected, each payload is pass through the
+<em>pre_func</em> function which is, by default, <em>e</em>.</p>
+<p>Once the requests have been generated, you can send them:</p>
+<div class="highlight-python"><pre>In [17]: batch()
+...
+
+In [18]: batch
+Out[18]: {200:5 | phrack.org}
+
+In [19]: print batch
+Path         Query                                  Status Length
+/issues.html issue=%2527                            200    2390
+/issues.html issue=%2527%2B--                       200    2390
+/issues.html issue=%253E%253Cscript%253Ealert%25... 200    2390
+/issues.html issue=-1                               200    2390
+/issues.html issue=2-1                              200    1948</pre>
+</div>
+<p>If you want to inject all the undefined parameter with a default value,
+<em>default_value</em> can be set. A shortcut for <em>i(default_value=&#8221;default&#8221;)</em> is <em>f</em>.</p>
+</div>
+</div>
+<div class="section" id="reference">
+<h1>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="http.html">abrupt.http - HTTP base classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxy.html">abrupt.proxy - HTTP(S) Proxy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">CheatSheet</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to Abrupt&#8217;s documentation!</a></li>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#quickstart">Quickstart</a><ul>
+<li><a class="reference internal" href="#proxy">Proxy</a></li>
+<li><a class="reference internal" href="#request-and-response">Request and Response</a></li>
+<li><a class="reference internal" href="#requestset">RequestSet</a></li>
+<li><a class="reference internal" href="#injection">Injection</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#reference">Reference</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="http.html"
+                        title="next chapter">abrupt.http - HTTP base classes</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
     </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/SecurusGlobal/Abrupt</pre>
-    </p>
-
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="http.html" title="abrupt.http - HTTP base classes"
+             >next</a> |</li>
+        <li><a href="#">Abrupt v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
     <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/SecurusGlobal/Abrupt">SecurusGlobal/Abrupt</a>
+        &copy; Copyright 2011, Securus Global.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
-
-  </div>
-
-  
-</body>
+  </body>
 </html>
