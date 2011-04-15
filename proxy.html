@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Abrupt v0.1 documentation" href="index.html" />
-    <link rel="next" title="CheatSheet" href="cheatsheet.html" />
+    <link rel="next" title="abrupt.injection - Request generator" href="injection.html" />
     <link rel="prev" title="abrupt.http - HTTP base classes" href="http.html" /> 
   </head>
   <body>
@@ -34,7 +34,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="cheatsheet.html" title="CheatSheet"
+          <a href="injection.html" title="abrupt.injection - Request generator"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="http.html" title="abrupt.http - HTTP base classes"
@@ -50,6 +50,16 @@
             
   <div class="section" id="abrupt-proxy-http-s-proxy">
 <h1>abrupt.proxy - HTTP(S) Proxy<a class="headerlink" href="#abrupt-proxy-http-s-proxy" title="Permalink to this headline">¶</a></h1>
+<p>To start a proxy, you can use the intercept method also known as p:</p>
+<dl class="function">
+<dt id="p">
+<tt class="descname">p</tt><big>(</big><span class="optional">[</span><em>port=8080</em>, <em>prompt=True</em>, <em>nb=-1</em>, <em>filter=re_filter_images</em>, <em>verbose=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a new proxy server on port <strong>port</strong>. If prompt is True, directions will be
+asked for every request. Nb requests will be intercepted at most. Filter
+should be a regular expression on the urls to filter. If verbose is True, the
+whole request is displayed instead of a summary.</p>
+</dd></dl>
+
 </div>
 
 
@@ -62,8 +72,8 @@
   <p class="topless"><a href="http.html"
                         title="previous chapter">abrupt.http - HTTP base classes</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="cheatsheet.html"
-                        title="next chapter">CheatSheet</a></p>
+  <p class="topless"><a href="injection.html"
+                        title="next chapter">abrupt.injection - Request generator</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/proxy.txt"
@@ -93,7 +103,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="cheatsheet.html" title="CheatSheet"
+          <a href="injection.html" title="abrupt.injection - Request generator"
              >next</a> |</li>
         <li class="right" >
           <a href="http.html" title="abrupt.http - HTTP base classes"
