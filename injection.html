@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
     <title>abrupt.injection - Request generator &mdash; Abrupt v0.1 documentation</title>
-    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/abrupt.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -45,44 +44,64 @@
 
     <div class="document">
       <div class="documentwrapper">
-        <div class="bodywrapper">
           <div class="body">
             
   <div class="section" id="abrupt-injection-request-generator">
 <h1>abrupt.injection - Request generator<a class="headerlink" href="#abrupt-injection-request-generator" title="Permalink to this headline">¶</a></h1>
+<p>The injection module provides two functions to &#8220;inject&#8221; a request (i.e.,
+generate a <a class="reference internal" href="http.html#RequestSet" title="RequestSet"><tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt></a> from a Request using a list of payloads):</p>
+<dl class="function">
+<dt id="i">
+<tt class="descname">i</tt><big>(</big><em>request</em>, <em>param=payload_name</em><span class="optional">[</span>, <em>pre_func=e</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#i" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will try to find the value <cite>param</cite> at the following locations:</p>
+<blockquote>
+<div><ul class="simple">
+<li>URL parameters</li>
+<li>Cookies</li>
+<li>Content for a POST or PUT request</li>
+</ul>
+</div></blockquote>
+<p>Then, for each payload contained in <cite>payloads[payload_name]</cite>, it
+will generate a request, based on <cite>request</cite>
+payload_name should be a key of the payloads dictionnary.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="i_at">
+<tt class="descname">i_at</tt><big>(</big><em>request</em>, <em>offset</em>, <em>payload=payload_name</em><span class="optional">[</span>, <em>pre_func=e</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#i_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function inject the request at a specific offset or between
+the offset position. If offset is an integer, the payload will be inserted
+at this position. If offset is a range (e.g., (23,29)) this range will
+be erased with the payload.</p>
+</dd></dl>
+
+<p>Once the RequestSet has been generated, you can execute it. The payloads
+are available in a global dictionnary:</p>
+<dl class="data">
+<dt id="payloads">
+<tt class="descname">payloads</tt><a class="headerlink" href="#payloads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionnary containing all the payloads. Each value is a list of
+string. When started, Abrupt load all the files under the directory
+&#8220;payloads&#8221; and create the corresponding key.</p>
+</dd></dl>
+
+<p>Some handy functions are also defined:</p>
+<dl class="function">
+<dt id="e">
+<tt class="descname">e</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#e" title="Permalink to this definition">¶</a></dt>
+<dd><p>urlquote(x)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="d">
+<tt class="descname">d</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#d" title="Permalink to this definition">¶</a></dt>
+<dd><p>urlunquote(x)</p>
+</dd></dl>
+
 </div>
 
 
           </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="proxy.html"
-                        title="previous chapter">abrupt.proxy - HTTP(S) Proxy</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="cheatsheet.html"
-                        title="next chapter">CheatSheet</a></p>
-  <h3>This Page</h3>
-  <ul class="this-page-menu">
-    <li><a href="_sources/injection.txt"
-           rel="nofollow">Show Source</a></li>
-  </ul>
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" size="18" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
       </div>
       <div class="clearer"></div>
     </div>
