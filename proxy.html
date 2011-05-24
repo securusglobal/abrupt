@@ -52,10 +52,12 @@
 <dl class="function">
 <dt id="p">
 <tt class="descname">p</tt><big>(</big><span class="optional">[</span><em>port=8080</em>, <em>prompt=True</em>, <em>nb=-1</em>, <em>filter=re_filter_images</em>, <em>verbose=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#p" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start a new proxy server on port <strong>port</strong>. If prompt is True, directions will be
-asked for every request. Nb requests will be intercepted at most. Filter
-should be a regular expression on the urls to filter. If verbose is True, the
-whole request is displayed instead of a summary.</p>
+<dd><p>Start a new proxy server on port <em>port</em>. If <em>prompt</em> is True, directions will be
+asked for every request. <em>nb</em> requests will be intercepted at most. The argument
+<em>filter</em> should be a regular expression on the urls to filter. By default, images
+are filtered. If <em>verbose</em> is True, the whole request is displayed instead of a
+summary.</p>
+<p>This function return a <a class="reference internal" href="http.html#RequestSet" title="RequestSet"><tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt></a> of all the successful <a class="reference internal" href="http.html#Request" title="Request"><tt class="xref py py-class docutils literal"><span class="pre">Request</span></tt></a> made.</p>
 </dd></dl>
 
 </div>

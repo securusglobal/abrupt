@@ -63,16 +63,19 @@ generate a <a class="reference internal" href="http.html#RequestSet" title="Requ
 </div></blockquote>
 <p>Then, for each payload contained in <cite>payloads[payload_name]</cite>, it
 will generate a request, based on <cite>request</cite>
-payload_name should be a key of the payloads dictionnary.</p>
+payload_name should be a key of the <a class="reference internal" href="#payloads" title="payloads"><tt class="xref py py-attr docutils literal"><span class="pre">payloads</span></tt></a> dictionnary.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="i_at">
 <tt class="descname">i_at</tt><big>(</big><em>request</em>, <em>offset</em>, <em>payload=payload_name</em><span class="optional">[</span>, <em>pre_func=e</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#i_at" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function inject the request at a specific offset or between
-the offset position. If offset is an integer, the payload will be inserted
-at this position. If offset is a range (e.g., (23,29)) this range will
-be erased with the payload.</p>
+<dd><p>This function inject the request at a specific offset, between
+two offset position or instead a token.
+If <em>offset</em> is an integer, the payload will be inserted
+at this position. If <em>offset</em> is a range (e.g., (23,29)) this range will
+be erased with the payload. If <em>offset</em> is a string, it will be replaced
+by the payloads. In the latter scenario, if the string is not found or
+if more than one occurrence exists, an exception will be raised.</p>
 </dd></dl>
 
 <p>Once the RequestSet has been generated, you can execute it. The payloads
