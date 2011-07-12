@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
     <title>abrupt.injection - Request generator &mdash; Abrupt v0.1 documentation</title>
-    <link rel="stylesheet" href="_static/abrupt.css" type="text/css" />
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -22,10 +22,18 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Abrupt v0.1 documentation" href="index.html" />
-    <link rel="next" title="CheatSheet" href="cheatsheet.html" />
+    <link rel="next" title="Real World Examples" href="real-world.html" />
     <link rel="prev" title="abrupt.proxy - HTTP(S) Proxy" href="proxy.html" /> 
   </head>
   <body>
+<pre class="header_logo">
+   _   _                  _   
+  /_\ | |__ _ _ _  _ _ __| |_ 
+ / _ \| '_ \ '_| || | '_ \  _|
+/_/ \_\_.__/_|  \_,_| .__/\__|
+                 0.1|_|       
+</pre>
+
     <div class="related">
       <h3>Navigation</h3>
       <ul>
@@ -33,7 +41,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="cheatsheet.html" title="CheatSheet"
+          <a href="real-world.html" title="Real World Examples"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="proxy.html" title="abrupt.proxy - HTTP(S) Proxy"
@@ -52,8 +60,9 @@
 generate a <a class="reference internal" href="http.html#RequestSet" title="RequestSet"><tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt></a> from a Request using a list of payloads):</p>
 <dl class="function">
 <dt id="i">
-<tt class="descname">i</tt><big>(</big><em>request</em>, <em>param=payload_name</em><span class="optional">[</span>, <em>pre_func=e</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#i" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function will try to find the value <cite>param</cite> at the following locations:</p>
+<tt class="descname">i</tt><big>(</big><em>request</em>, <em>**kwds</em><span class="optional">[</span>, <em>pre_func=e</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#i" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each keyword, this function will try to find the key in the request
+at the following locations:</p>
 <blockquote>
 <div><ul class="simple">
 <li>URL parameters</li>
@@ -61,14 +70,32 @@ generate a <a class="reference internal" href="http.html#RequestSet" title="Requ
 <li>Content for a POST or PUT request</li>
 </ul>
 </div></blockquote>
-<p>Then, for each payload contained in <cite>payloads[payload_name]</cite>, it
-will generate a request, based on <cite>request</cite>
-payload_name should be a key of the <a class="reference internal" href="#payloads" title="payloads"><tt class="xref py py-attr docutils literal"><span class="pre">payloads</span></tt></a> dictionnary.</p>
+<p>Then, each value will be injected at the parameter location and a set
+of request returned. The values could be either a list of payload
+(e.g., id=[1,2,3]) or a key of the global dictionnary <a class="reference internal" href="#payloads" title="payloads"><tt class="xref py py-data docutils literal"><span class="pre">payloads</span></tt></a>
+(e.g., name=&#8221;default&#8221;).</p>
+<p>Some examples:</p>
+<div class="highlight-python"><pre>In [1]: print r
+GET /issues.html?issue=59&amp;id=5 HTTP/1.1
+Host: www.phrack.com
+Cookie: PHPSESSID=4592a21fc9fd6b1e0afcc931eb74b28a
+
+In [2]: i(r, id="default")
+Out[2]: {unknown:9 | www.phrack.com}
+
+In [3]: i(r, PHPSESSID=["1234","0000","31337-abcd"])
+Out[3]: {unknown:3 | www.phrack.com}
+
+In [4]: i(r, issue="sqli")
+Out[4]: {unknown:106 | www.phrack.com}</pre>
+</div>
+<p>The <em>pre_func</em> parameter is a function to apply to each payload before
+being injected. By default, it urlencode the payload.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="i_at">
-<tt class="descname">i_at</tt><big>(</big><em>request</em>, <em>offset</em>, <em>payload=payload_name</em><span class="optional">[</span>, <em>pre_func=e</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#i_at" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">i_at</tt><big>(</big><em>request</em>, <em>offset</em>, <em>payload</em><span class="optional">[</span>, <em>pre_func=e</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#i_at" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function inject the request at a specific offset, between
 two offset position or instead a token.
 If <em>offset</em> is an integer, the payload will be inserted
@@ -86,6 +113,16 @@ are available in a global dictionnary:</p>
 <dd><p>Dictionnary containing all the payloads. Each value is a list of
 string. When started, Abrupt load all the files under the directory
 &#8220;payloads&#8221; and create the corresponding key.</p>
+<dl class="docutils">
+<dt>By default, it contains:</dt>
+<dd><ul class="first last simple">
+<li>default, a minimal list of standard payload, targetting classic web
+app vulnerabilities.</li>
+<li>full, a larger list of standard payload.</li>
+<li>sqli, targetting SQL injection.</li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <p>Some handy functions are also defined:</p>
@@ -115,7 +152,7 @@ string. When started, Abrupt load all the files under the directory
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="cheatsheet.html" title="CheatSheet"
+          <a href="real-world.html" title="Real World Examples"
              >next</a> |</li>
         <li class="right" >
           <a href="proxy.html" title="abrupt.proxy - HTTP(S) Proxy"
