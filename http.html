@@ -156,9 +156,18 @@ when called using the interpreter. The other methods available are:</p>
 <dl class="method">
 <dt id="Request.edit">
 <tt class="descname">edit</tt><big>(</big><big>)</big><a class="headerlink" href="#Request.edit" title="Permalink to this definition">¶</a></dt>
-<dd><p>start your favorite $EDITOR to edit the request, the new request is
-returned. If the environment variable $EDITOR has not been set, &#8216;vim&#8217;
+<dd><p>start your favorite EDITOR to edit the request, the new request is
+returned. If the environment variable EDITOR has not been set, &#8216;vim&#8217;
 will be used.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Request.play">
+<tt class="descname">play</tt><big>(</big><em>options</em><big>)</big><a class="headerlink" href="#Request.play" title="Permalink to this definition">¶</a></dt>
+<dd><p>start your EDITOR with two windows. Each time the request file is saved,
+the request is made to the server and the response updated. By default,
+options is set up for Vim. When the editor terminates, the last valid
+request made is returned.</p>
 </dd></dl>
 
 <dl class="method">
