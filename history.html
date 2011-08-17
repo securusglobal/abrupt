@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>abrupt.proxy - HTTP(S) Proxy &mdash; Abrupt v0.2 documentation</title>
+    <title>abrupt.history - Global history &mdash; Abrupt v0.2 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -22,8 +22,8 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Abrupt v0.2 documentation" href="index.html" />
-    <link rel="next" title="abrupt.injection - Request generator" href="injection.html" />
-    <link rel="prev" title="abrupt.http - HTTP base classes" href="http.html" /> 
+    <link rel="next" title="abrupt.conf - Configuration" href="configuration.html" />
+    <link rel="prev" title="abrupt.injection - Request generator" href="injection.html" /> 
   </head>
   <body>
 <pre class="header_logo">
@@ -41,10 +41,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="injection.html" title="abrupt.injection - Request generator"
+          <a href="configuration.html" title="abrupt.conf - Configuration"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="http.html" title="abrupt.http - HTTP base classes"
+          <a href="injection.html" title="abrupt.injection - Request generator"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Abrupt v0.2 documentation</a> &raquo;</li> 
       </ul>
@@ -54,18 +54,26 @@
       <div class="documentwrapper">
           <div class="body">
             
-  <div class="section" id="abrupt-proxy-http-s-proxy">
-<h1>abrupt.proxy - HTTP(S) Proxy<a class="headerlink" href="#abrupt-proxy-http-s-proxy" title="Permalink to this headline">¶</a></h1>
-<p>To start a proxy, you can use the intercept method also known as p:</p>
-<dl class="function">
-<dt id="p">
-<tt class="descname">p</tt><big>(</big><span class="optional">[</span><em>port=8080</em>, <em>prompt=True</em>, <em>nb=-1</em>, <em>filter=re_filter_images</em>, <em>verbose=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#p" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start a new proxy server on port <em>port</em>. If <em>prompt</em> is True, directions will be
-asked for every request. <em>nb</em> requests will be intercepted at most. The argument
-<em>filter</em> should be a regular expression on the urls to filter. By default, images
-are filtered. If <em>verbose</em> is True, the whole request is displayed instead of a
-summary.</p>
-<p>This function return a <a class="reference internal" href="http.html#RequestSet" title="RequestSet"><tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt></a> of all the successful <a class="reference internal" href="http.html#Request" title="Request"><tt class="xref py py-class docutils literal"><span class="pre">Request</span></tt></a> made.</p>
+  <div class="section" id="abrupt-history-global-history">
+<h1>abrupt.history - Global history<a class="headerlink" href="#abrupt-history-global-history" title="Permalink to this headline">¶</a></h1>
+<p>By default, Abrupt keep track of all the requests made:</p>
+<dl class="data">
+<dt id="history">
+<tt class="descname">history</tt><a class="headerlink" href="#history" title="Permalink to this definition">¶</a></dt>
+<dd><p>History is a <a class="reference internal" href="http.html#RequestSet" title="RequestSet"><tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt></a> which contains all the requests
+made through Abrupt. To turn it off, set <cite>conf.history</cite> to False.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">history</span>
+<span class="go">{200:3 404:2 | www.phrack.org}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="n">history</span>
+<span class="go">Method Path                 Query Status Length</span>
+<span class="go">GET    /                          200    6174</span>
+<span class="go">GET    /style.css                 200    4406</span>
+<span class="go">GET    /img/phrack-logo.jpg       200    82036</span>
+<span class="go">GET    /favicon.ico               404    183</span>
+<span class="go">GET    /favicon.ico               404    183</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </div>
@@ -82,10 +90,10 @@ summary.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="injection.html" title="abrupt.injection - Request generator"
+          <a href="configuration.html" title="abrupt.conf - Configuration"
              >next</a> |</li>
         <li class="right" >
-          <a href="http.html" title="abrupt.http - HTTP base classes"
+          <a href="injection.html" title="abrupt.injection - Request generator"
              >previous</a> |</li>
         <li><a href="index.html">Abrupt v0.2 documentation</a> &raquo;</li> 
       </ul>

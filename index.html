@@ -6,13 +6,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Quickstart &mdash; Abrupt v0.1 documentation</title>
+    <title>Quickstart &mdash; Abrupt v0.2 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.1',
+        VERSION:     '0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -21,7 +21,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Abrupt v0.1 documentation" href="#" />
+    <link rel="top" title="Abrupt v0.2 documentation" href="#" />
     <link rel="next" title="abrupt.http - HTTP base classes" href="http.html" /> 
   </head>
   <body>
@@ -30,7 +30,7 @@
   /_\ | |__ _ _ _  _ _ __| |_ 
  / _ \| '_ \ '_| || | '_ \  _|
 /_/ \_\_.__/_|  \_,_| .__/\__|
-                 0.1|_|       
+                 0.2|_|       
 </pre>
 
     <div class="related">
@@ -42,7 +42,7 @@
         <li class="right" >
           <a href="http.html" title="abrupt.http - HTTP base classes"
              accesskey="N">next</a> |</li>
-        <li><a href="#">Abrupt v0.1 documentation</a> &raquo;</li> 
+        <li><a href="#">Abrupt v0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -54,13 +54,11 @@
 BSD Licensed. Based on Python&gt;=2.6.</p>
 <div class="section" id="quickstart">
 <h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-python"><pre>$ git clone git://github.com/SecurusGlobal/Abrupt.git abrupt
-$ cd abrupt
-$ sudo python setup.py install
+<div class="highlight-python"><pre>$ sudo pip install abrupt
 $ abrupt
 Generating SSL certificate...
 CA certificate : /home/tweksteen/.abrupt/ca.pem
-Abrupt v0.1
+Abrupt v0.2
 &gt;&gt;&gt;</pre>
 </div>
 <p>The first time you start Abrupt, it will generate a CA certificate. This is
@@ -119,8 +117,7 @@ request.</p>
 </div>
 <div class="section" id="request-and-response">
 <h2>Request and Response<a class="headerlink" href="#request-and-response" title="Permalink to this headline">¶</a></h2>
-<p>Abrupt have its own representation of HTTP request and response based on
-httplib:</p>
+<p>Abrupt have its own representation of HTTP request and response:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">r</span>
 <span class="go">GET / HTTP/1.1</span>
@@ -146,10 +143,7 @@ path, query, url, content. You can edit the request through your EDITOR
 <span class="go">&lt;200 Gzip 5419&gt;</span>
 </pre></div>
 </div>
-<p>For more fun, try the <a class="reference internal" href="http.html#Request.play" title="Request.play"><tt class="xref py py-meth docutils literal"><span class="pre">Request.play()</span></tt></a>. It will start your editor (which should
-be Vim) and display the request and the response in two different windows.
-Every time you save the request file, the request is made to the server and
-the response displayed.</p>
+<p>For more fun, try the <a class="reference internal" href="http.html#Request.play" title="Request.play"><tt class="xref py py-meth docutils literal"><span class="pre">Request.play()</span></tt></a>!</p>
 <p><a class="reference internal" href="http.html#Response" title="Response"><tt class="xref py py-class docutils literal"><span class="pre">Response</span></tt></a> objects have the attributes: status, reason, headers, content,
 readable_content. You can use the <em>preview</em> method to open a static dump of
 the response in your favorite BROWSER and the <em>view</em> method to view the source
@@ -224,12 +218,18 @@ global variable. Before being injected, each payload is pass through the
 <li class="toctree-l1"><a class="reference internal" href="http.html">abrupt.http - HTTP base classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="proxy.html">abrupt.proxy - HTTP(S) Proxy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="injection.html">abrupt.injection - Request generator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="history.html">abrupt.history - Global history</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">abrupt.conf - Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="real-world.html">Real World Examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="real-world.html#csrf-protected-form">CSRF Protected Form</a></li>
 <li class="toctree-l2"><a class="reference internal" href="real-world.html#blind-sql-injection">Blind SQL Injection</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">CheatSheet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">CheatSheet</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="cheatsheet.html#function">Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheatsheet.html#global">Global</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -255,7 +255,7 @@ global variable. Before being injected, each payload is pass through the
         <li class="right" >
           <a href="http.html" title="abrupt.http - HTTP base classes"
              >next</a> |</li>
-        <li><a href="#">Abrupt v0.1 documentation</a> &raquo;</li> 
+        <li><a href="#">Abrupt v0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

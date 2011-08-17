@@ -6,13 +6,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Index &mdash; Abrupt v0.1 documentation</title>
+    <title>Index &mdash; Abrupt v0.2 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.1',
+        VERSION:     '0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -21,7 +21,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Abrupt v0.1 documentation" href="index.html" /> 
+    <link rel="top" title="Abrupt v0.2 documentation" href="index.html" /> 
   </head>
   <body>
 <pre class="header_logo">
@@ -29,7 +29,7 @@
   /_\ | |__ _ _ _  _ _ __| |_ 
  / _ \| '_ \ '_| || | '_ \  _|
 /_/ \_\_.__/_|  \_,_| .__/\__|
-                 0.1|_|       
+                 0.2|_|       
 </pre>
 
     <div class="related">
@@ -38,7 +38,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="#" title="General Index"
              accesskey="I">index</a></li>
-        <li><a href="index.html">Abrupt v0.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Abrupt v0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -50,7 +50,7 @@
    <h1 id="index">Index</h1>
 
    <div class="genindex-jumpbox">
-   <a href="#_"><strong>_</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#U"><strong>U</strong></a> 
+   <a href="#_"><strong>_</strong></a> | <a href="#A"><strong>A</strong></a> | <a href="#C"><strong>C</strong></a> | <a href="#D"><strong>D</strong></a> | <a href="#E"><strong>E</strong></a> | <a href="#F"><strong>F</strong></a> | <a href="#H"><strong>H</strong></a> | <a href="#I"><strong>I</strong></a> | <a href="#M"><strong>M</strong></a> | <a href="#P"><strong>P</strong></a> | <a href="#Q"><strong>Q</strong></a> | <a href="#R"><strong>R</strong></a> | <a href="#S"><strong>S</strong></a> | <a href="#U"><strong>U</strong></a> 
    </div>
 <h2 id="_">_</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
@@ -65,10 +65,18 @@
 </dl></td>
 </tr></table>
 
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%" valign="top"><dl>
+    <dt><a href="configuration.html#autosave">autosave</a></dt>
+</dl></td>
+</tr></table>
+
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
     <dt><a href="http.html#c">c() (built-in function)</a></dt>
+    <dt><a href="configuration.html#conf">conf (built-in variable)</a></dt>
     <dt><a href="http.html#Response.content">content (Response attribute)</a></dt>
 </dl></td>
   <td style="width: 33%" valign="top"><dl>
@@ -116,9 +124,13 @@
     <dd><dl>
       <dt><a href="http.html#Response.headers">(Response attribute)</a></dt>
   </dl></dd>
-    <dt><a href="http.html#Request.hostname">hostname (Request attribute)</a></dt>
+    <dt><a href="configuration.html#history">history</a></dt>
+    <dd><dl>
+      <dt><a href="history.html#history">(built-in variable)</a></dt>
+  </dl></dd>
 </dl></td>
   <td style="width: 33%" valign="top"><dl>
+    <dt><a href="http.html#Request.hostname">hostname (Request attribute)</a></dt>
     <dt><a href="http.html#Request.http_version">http_version (Request attribute)</a></dt>
     <dd><dl>
       <dt><a href="http.html#Response.http_version">(Response attribute)</a></dt>
@@ -149,11 +161,12 @@
     <dt><a href="proxy.html#p">p() (built-in function)</a></dt>
     <dt><a href="http.html#Request.path">path (Request attribute)</a></dt>
     <dt><a href="injection.html#payloads">payloads (built-in variable)</a></dt>
+    <dt><a href="http.html#Request.play">play() (Request method)</a></dt>
 </dl></td>
   <td style="width: 33%" valign="top"><dl>
-    <dt><a href="http.html#Request.play">play() (Request method)</a></dt>
     <dt><a href="http.html#Request.port">port (Request attribute)</a></dt>
     <dt><a href="http.html#Response.preview">preview() (Response method)</a></dt>
+    <dt><a href="configuration.html#proxy">proxy</a></dt>
 </dl></td>
 </tr></table>
 
@@ -182,7 +195,10 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%" valign="top"><dl>
-    <dt><a href="http.html#RequestSet.save">save() (RequestSet method)</a></dt>
+    <dt><a href="configuration.html#save">save() (built-in function)</a></dt>
+    <dd><dl>
+      <dt><a href="http.html#RequestSet.save">(RequestSet method)</a></dt>
+  </dl></dd>
 </dl></td>
   <td style="width: 33%" valign="top"><dl>
     <dt><a href="http.html#Response.status">status (Response attribute)</a></dt>
@@ -211,7 +227,7 @@
         <li class="right" style="margin-right: 10px">
           <a href="#" title="General Index"
              >index</a></li>
-        <li><a href="index.html">Abrupt v0.1 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Abrupt v0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
