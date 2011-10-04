@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Abrupt v0.2 documentation" href="index.html" />
     <link rel="next" title="Real World Examples" href="real-world.html" />
-    <link rel="prev" title="abrupt.history - Global history" href="history.html" /> 
+    <link rel="prev" title="abrupt.session - Session handler" href="session.html" /> 
   </head>
   <body>
 <pre class="header_logo">
@@ -41,10 +41,13 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="real-world.html" title="Real World Examples"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="history.html" title="abrupt.history - Global history"
+          <a href="session.html" title="abrupt.session - Session handler"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Abrupt v0.2 documentation</a> &raquo;</li> 
       </ul>
@@ -54,52 +57,101 @@
       <div class="documentwrapper">
           <div class="body">
             
-  <div class="section" id="abrupt-conf-configuration">
-<h1>abrupt.conf - Configuration<a class="headerlink" href="#abrupt-conf-configuration" title="Permalink to this headline">¶</a></h1>
-<dl class="data">
-<dt id="conf">
-<tt class="descname">conf</tt><a class="headerlink" href="#conf" title="Permalink to this definition">¶</a></dt>
-<dd><p>Global object used to configure Abrupt. It is automatically
-loading when Abrupt starts, based on ~/.abrupt/abrupt.conf.</p>
-<p>It is <em>NOT</em> saved whenever a modification is made. You should
-manually call the <a class="reference internal" href="#save" title="save"><tt class="xref py py-func docutils literal"><span class="pre">save()</span></tt></a> function to make the modifications persistents.</p>
-<dl class="function">
-<dt id="save">
-<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#save" title="Permalink to this definition">¶</a></dt>
+  <div class="section" id="module-conf">
+<span id="abrupt-conf-configuration"></span><h1>abrupt.conf - Configuration<a class="headerlink" href="#module-conf" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="conf.Configuration">
+<em class="property">class </em><tt class="descclassname">conf.</tt><tt class="descname">Configuration</tt><a class="headerlink" href="#conf.Configuration" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class should not be instanciated itself. Instead, use
+the <a class="reference internal" href="#conf.conf" title="conf.conf"><tt class="xref py py-data docutils literal"><span class="pre">conf</span></tt></a> instance, described below.</p>
+<dl class="method">
+<dt id="conf.Configuration.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#conf.Configuration.save" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<p>Save the current configuration.</p>
+<p>Save the current configuration. This method should only be called
+outside a session. Inside a session, simply call <a class="reference internal" href="session.html#session.save" title="session.save"><tt class="xref py py-func docutils literal"><span class="pre">session.save()</span></tt></a>.</p>
 <dl class="attribute">
-<dt id="proxy">
-<tt class="descname">proxy</tt><a class="headerlink" href="#proxy" title="Permalink to this definition">¶</a></dt>
+<dt id="conf.Configuration.proxy">
+<tt class="descname">proxy</tt><a class="headerlink" href="#conf.Configuration.proxy" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <p>Upstream proxy. By default, None.</p>
 <dl class="attribute">
-<dt id="autosave">
-<tt class="descname">autosave</tt><a class="headerlink" href="#autosave" title="Permalink to this definition">¶</a></dt>
+<dt id="conf.Configuration.port">
+<tt class="descname">port</tt><a class="headerlink" href="#conf.Configuration.port" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<p>Autosave the session when terminating Abrupt or opening a new one.
+<p>Default proxy port. See also the <cite>port</cite> parameter of the <a class="reference internal" href="proxy.html#proxy.proxy" title="proxy.proxy"><tt class="xref py py-func docutils literal"><span class="pre">proxy.proxy()</span></tt></a>
+function. By default, 8080.</p>
+<dl class="attribute">
+<dt id="conf.Configuration.autosave">
+<tt class="descname">autosave</tt><a class="headerlink" href="#conf.Configuration.autosave" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Autosave the session when terminating Abrupt or switching to a
+new one. By default, True.</p>
+<dl class="attribute">
+<dt id="conf.Configuration.history">
+<tt class="descname">history</tt><a class="headerlink" href="#conf.Configuration.history" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Keep a copy of all the requests made in the global <tt class="xref py py-mod docutils literal"><span class="pre">history</span></tt>.
 By default, True.</p>
 <dl class="attribute">
-<dt id="history">
-<tt class="descname">history</tt><a class="headerlink" href="#history" title="Permalink to this definition">¶</a></dt>
+<dt id="conf.Configuration.ssl_version">
+<tt class="descname">ssl_version</tt><a class="headerlink" href="#conf.Configuration.ssl_version" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<p>Keep a copy of all the requests made in the global <a class="reference internal" href="#history" title="history"><tt class="xref py py-mod docutils literal"><span class="pre">history</span></tt></a>.
-By default, True.</p>
+<p>SSL version to use when connecting to the server. Possible values
+are: SSLv2, SSLv3, TLSv1 and SSLv23.</p>
+<dl class="attribute">
+<dt id="conf.Configuration.editor">
+<tt class="descname">editor</tt><a class="headerlink" href="#conf.Configuration.editor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Default editor to use when editing a request or viewing a response.
+By default, <tt class="docutils literal"><span class="pre">/usr/bin/vim</span></tt>.</p>
+<dl class="attribute">
+<dt id="conf.Configuration.diff_editor">
+<tt class="descname">diff_editor</tt><a class="headerlink" href="#conf.Configuration.diff_editor" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Default editor to use when comparing requests or responses.
+By default, <tt class="docutils literal"><span class="pre">/usr/bin/vimdiff</span></tt>.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="conf.conf">
+<tt class="descclassname">conf.</tt><tt class="descname">conf</tt><a class="headerlink" href="#conf.conf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Global object used to configure Abrupt. It is automatically
+loading when Abrupt starts, based on ~/.abrupt/abrupt.conf.
+When a session is loaded, the configuration included inside
+the session is used.</p>
+<p>By default, it is <em>NOT</em> saved whenever a modification is made.
+You should manually call the <a class="reference internal" href="#conf.Configuration.save" title="conf.Configuration.save"><tt class="xref py py-func docutils literal"><span class="pre">save()</span></tt></a> function
+to make the modifications persistents. When a new session is started,
+the current configuration is cloned into it. When the session is
+saved, the associated configuration is included.</p>
 <p>Example:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span>
-<span class="go">proxy: None</span>
 <span class="go">autosave: True</span>
+<span class="go">diff_editor: /usr/bin/vimdiff</span>
+<span class="go">editor: /usr/bin/vim</span>
 <span class="go">history: True</span>
+<span class="go">port: 8080</span>
+<span class="go">proxy: None</span>
+<span class="go">ssl_version: SSLv3</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">autosave</span> <span class="o">=</span> <span class="bp">False</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span>
-<span class="go">proxy: None</span>
 <span class="go">autosave: False</span>
+<span class="go">diff_editor: /usr/bin/vimdiff</span>
+<span class="go">editor: /usr/bin/vim</span>
 <span class="go">history: True</span>
+<span class="go">port: 8080</span>
+<span class="go">proxy: None</span>
+<span class="go">ssl_version: SSLv3</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -118,10 +170,13 @@ By default, True.</p>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="real-world.html" title="Real World Examples"
              >next</a> |</li>
         <li class="right" >
-          <a href="history.html" title="abrupt.history - Global history"
+          <a href="session.html" title="abrupt.session - Session handler"
              >previous</a> |</li>
         <li><a href="index.html">Abrupt v0.2 documentation</a> &raquo;</li> 
       </ul>

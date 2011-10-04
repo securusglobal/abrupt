@@ -40,6 +40,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="http.html" title="abrupt.http - HTTP base classes"
              accesskey="N">next</a> |</li>
         <li><a href="#">Abrupt v0.2 documentation</a> &raquo;</li> 
@@ -58,7 +61,7 @@ BSD Licensed. Based on Python&gt;=2.6.</p>
 $ abrupt
 Generating SSL certificate...
 CA certificate : /home/tweksteen/.abrupt/ca.pem
-Abrupt v0.2
+Abrupt 0.2
 &gt;&gt;&gt;</pre>
 </div>
 <p>The first time you start Abrupt, it will generate a CA certificate. This is
@@ -67,9 +70,9 @@ proxy enabled. You can install this certificate in your browser. However, no
 check is performed by Abrupt on the server side regarding ssl.</p>
 <div class="section" id="proxy">
 <h2>Proxy<a class="headerlink" href="#proxy" title="Permalink to this headline">¶</a></h2>
-<p>To start, let&#8217;s grab some HTTP requests. To do so, use the proxy or <a class="reference internal" href="proxy.html#p" title="p"><tt class="xref py py-func docutils literal"><span class="pre">p()</span></tt></a> function. It
-starts a new proxy server on port 8080. This server will catch every HTTP(S)
-request and prompt the user for directions:</p>
+<p>To start, let&#8217;s grab some HTTP requests. To do so, use the <a class="reference internal" href="proxy.html#proxy.proxy" title="proxy.proxy"><tt class="xref py py-func docutils literal"><span class="pre">proxy()</span></tt></a>
+function or its alias <cite>p</cite>. It will start a new proxy server on port 8080. This
+server will catch every HTTP(S) request and prompt the user for directions:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="p">()</span>
 <span class="go">Running on port 8080</span>
 <span class="go">Ctrl-C to interrupt the proxy...</span>
@@ -83,10 +86,10 @@ All the requests will be captured by Abrupt:</p>
 <blockquote>
 <div><ul class="simple">
 <li>(v)iew - print the full request</li>
-<li>(e)dit - manually edit the request in your favorite $EDITOR</li>
+<li>(e)dit - manually edit the request in your text editor</li>
 <li>(d)rop - drop the request</li>
 <li>(f)orward - Forward the request</li>
-<li>(c)ontinue - Forward this request and the following</li>
+<li>(c)ontinue - Forward this request and the followings</li>
 </ul>
 </div></blockquote>
 <p>Forward is the default action if none is passed. Once a request has been made,
@@ -95,7 +98,8 @@ you can see the response status and length:</p>
 &lt;200 Gzip 5419&gt;</pre>
 </div>
 <p>Once you&#8217;re done with your requests, use Ctrl-C to exit. This function return
-all the completed requests and associated responses in a <a class="reference internal" href="http.html#RequestSet" title="RequestSet"><tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt></a> object:</p>
+all the completed requests and associated responses in a
+<a class="reference internal" href="http.html#http.RequestSet" title="http.RequestSet"><tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt></a> object:</p>
 <div class="highlight-python"><pre>1 request intercepted
 {200:1 | www.phrack.org}
 &gt;&gt;&gt; requests = _
@@ -106,14 +110,19 @@ GET    /          200    5419
 &gt;&gt;&gt; requests[0]
 &lt;GET www.phrack.org /&gt;</pre>
 </div>
-<p>Not all the requests are shown. By default, a filter silently forward all the
-image files (.png, .jpg, .jpeg, .ico, .gif). To see them, you can use:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="p">(</span><span class="nb">filter</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<p>The proxy comes with a powerful rules system to automatically process some
+requests according to used-defined criteria. For instance:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="p">(</span><span class="n">rules</span><span class="o">=</span><span class="p">((</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">hostname</span> <span class="o">!=</span> <span class="s">&quot;www.phrack.org&quot;</span><span class="p">,</span> <span class="s">&quot;d&quot;</span><span class="p">),)</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>Some other functions exists : <em>w</em>, just display the requests, doesn&#8217;t provided
-any interaction. <em>p1</em> and <em>w1</em>, working as <em>p</em> and <em>w</em> but only intercept one
-request.</p>
+<p>will automatically drop any request which is not targeting &#8220;www.phrack.org&#8221;.
+If no rule is provided, it will forward image files (.png, .jpg, .jpeg,
+.ico, .gif) without prompting the user. To see these images, you can increase
+the verbosity level:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To learn more about rules and how to make your own, see <a class="reference internal" href="proxy.html#proxy.proxy" title="proxy.proxy"><tt class="xref py py-func docutils literal"><span class="pre">proxy()</span></tt></a>.</p>
 </div>
 <div class="section" id="request-and-response">
 <h2>Request and Response<a class="headerlink" href="#request-and-response" title="Permalink to this headline">¶</a></h2>
@@ -131,8 +140,8 @@ request.</p>
 <span class="go">Proxy-Connection: keep-alive</span>
 </pre></div>
 </div>
-<p><a class="reference internal" href="http.html#Request" title="Request"><tt class="xref py py-class docutils literal"><span class="pre">Request</span></tt></a> objects have numerous attributes: hostname, port, headers,
-path, query, url, content. You can edit the request through your EDITOR
+<p><a class="reference internal" href="http.html#http.Request" title="http.Request"><tt class="xref py py-class docutils literal"><span class="pre">Request</span></tt></a> objects have numerous attributes: hostname, port, headers,
+path, query, url, content, etc. You can edit the request through your editor
 (default is vim) to create a new request:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">new_r</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">edit</span><span class="p">()</span>
 </pre></div>
@@ -143,59 +152,75 @@ path, query, url, content. You can edit the request through your EDITOR
 <span class="go">&lt;200 Gzip 5419&gt;</span>
 </pre></div>
 </div>
-<p>For more fun, try the <a class="reference internal" href="http.html#Request.play" title="Request.play"><tt class="xref py py-meth docutils literal"><span class="pre">Request.play()</span></tt></a>!</p>
-<p><a class="reference internal" href="http.html#Response" title="Response"><tt class="xref py py-class docutils literal"><span class="pre">Response</span></tt></a> objects have the attributes: status, reason, headers, content,
-readable_content. You can use the <em>preview</em> method to open a static dump of
-the response in your favorite BROWSER and the <em>view</em> method to view the source
-in your favorite EDITOR.</p>
+<p>For interactive edition, see the <a class="reference internal" href="http.html#http.Request.play" title="http.Request.play"><tt class="xref py py-meth docutils literal"><span class="pre">play()</span></tt></a> method. Amusement
+garanti! Abrupt also include a <a class="reference internal" href="http.html#http.create" title="http.create"><tt class="xref py py-func docutils literal"><span class="pre">create()</span></tt></a> function (aliased <cite>c</cite>) to
+quickly forge a Request based on a URL:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="p">(</span><span class="s">&quot;http://www.phrack.org&quot;</span><span class="p">)</span>
+<span class="go">&lt;GET www.phrack.org /&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">c</span>
+<span class="go">GET / HTTP/1.1</span>
+<span class="go">Host: www.phrack.org</span>
+<span class="go">User-Agent: Mozilla/5.0 (Windows; U; MSIE 9.0; Windows NT 0.9; en-US)</span>
+<span class="go">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span>
+<span class="go">Accept-Language: en;q=0.5,fr;q=0.2</span>
+<span class="go">Accept-Encoding: gzip, deflate</span>
+<span class="go">Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7</span>
+</pre></div>
+</div>
+<p><a class="reference internal" href="http.html#http.Response" title="http.Response"><tt class="xref py py-class docutils literal"><span class="pre">Response</span></tt></a> objects have the attributes: status, reason, headers,
+content, raw_content, etc. You can use the <a class="reference internal" href="http.html#http.Response.preview" title="http.Response.preview"><tt class="xref py py-meth docutils literal"><span class="pre">preview()</span></tt></a>
+method to open a static dump of the response in your browser and the
+<a class="reference internal" href="http.html#http.Response.view" title="http.Response.view"><tt class="xref py py-meth docutils literal"><span class="pre">view()</span></tt></a> method to view the source in your text editor.</p>
 </div>
 <div class="section" id="requestset">
 <h2>RequestSet<a class="headerlink" href="#requestset" title="Permalink to this headline">¶</a></h2>
-<p>A <a class="reference internal" href="http.html#RequestSet" title="RequestSet"><tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt></a> is just a set of requests. Usually, you&#8217;ll have one from a proxy
-method. You can add more requests from another capture session:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">w</span><span class="p">()</span>
+<p>A <a class="reference internal" href="http.html#http.RequestSet" title="http.RequestSet"><tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt></a> is a set of requests. Usually, you&#8217;ll have one
+from the <a class="reference internal" href="proxy.html#proxy.proxy" title="proxy.proxy"><tt class="xref py py-func docutils literal"><span class="pre">proxy()</span></tt></a> method. You can add more requests from another
+capture session:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="p">()</span>
 <span class="go">Ctrl-C to interrupt the proxy...</span>
 <span class="go">&lt;GET www.cryptome.org /&gt;</span>
 <span class="go">&lt;200 49380&gt;</span>
 <span class="go">1 request intercepted</span>
-
 <span class="gp">&gt;&gt;&gt; </span><span class="n">requests</span> <span class="o">+=</span> <span class="n">_</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">requests</span>
 <span class="go">{200:2 | phrack.org, www.cryptome.org}</span>
 </pre></div>
 </div>
-<p>You can filter the request by any request attributes:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">requests</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s">&quot;phrack.org&quot;</span><span class="p">)</span>
+<p>You can filter the requests by any request attribute using the
+<a class="reference internal" href="http.html#http.RequestSet.filter" title="http.RequestSet.filter"><tt class="xref py py-meth docutils literal"><span class="pre">filter()</span></tt></a> method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">requests</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">hostname</span> <span class="o">==</span> <span class="s">&quot;phrack.org&quot;</span><span class="p">)</span>
 <span class="go">{200:1 | phrack.org}</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="injection">
 <h2>Injection<a class="headerlink" href="#injection" title="Permalink to this headline">¶</a></h2>
-<p>From one request, it is possible to generate a batch of request where one or
-many parameters change using the injection or <a class="reference internal" href="injection.html#i" title="i"><tt class="xref py py-func docutils literal"><span class="pre">i()</span></tt></a> function</p>
+<p>From one request, it is possible to generate a batch of requests where one or
+many parameters vary using the <a class="reference internal" href="injection.html#injection.inject" title="injection.inject"><tt class="xref py py-func docutils literal"><span class="pre">inject()</span></tt></a> function (aliased <cite>i</cite>):</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span>
 <span class="go">&lt;GET phrack.org /issues.html&gt;</span>
-
 <span class="gp">&gt;&gt;&gt; </span><span class="n">batch</span> <span class="o">=</span> <span class="n">i</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">issue</span><span class="o">=</span><span class="s">&quot;default&quot;</span><span class="p">)</span>
-
 <span class="gp">&gt;&gt;&gt; </span><span class="n">batch</span>
 <span class="go">{unknown:9 | phrack.org}</span>
 </pre></div>
 </div>
-<p>In this case, a RequestSet of 9 requests has been generated. <em>i</em> lookup for
-arguments in the query string, the cookie and the post data. You should give
-the name and the list of payloads name as arguments. The list of payloads can
-be found in the payloads/ directory. You can also get the keys of the <a class="reference internal" href="injection.html#payloads" title="payloads"><tt class="xref py py-data docutils literal"><span class="pre">payloads</span></tt></a>
-global variable. Before being injected, each payload is pass through the
-<em>pre_func</em> function which is, by default, <a class="reference internal" href="injection.html#e" title="e"><tt class="xref py py-func docutils literal"><span class="pre">e()</span></tt></a>.</p>
-<p>Once the requests have been generated, you can send them:</p>
+<p>In this case, a <a class="reference internal" href="http.html#http.RequestSet" title="http.RequestSet"><tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt></a> of 9 requests has been generated.
+<cite>inject</cite> lookup for the arguments in the query string, the cookies and the POST
+data. Then, it generates a new request where the value of this argument is
+replaced by each value of the corresponding payload list. The possible values
+for the payload list name are the keys of the <a class="reference internal" href="injection.html#injection.payloads" title="injection.payloads"><tt class="xref py py-data docutils literal"><span class="pre">payloads</span></tt></a>
+global dictionnary, and Abrupt comes with some default ones:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">payloads</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="go">[&#39;digits&#39;, &#39;lowercase&#39;, &#39;full&#39;, &#39;default&#39;, &#39;uppercase&#39;, &#39;sqli&#39;, &#39;hexdigits&#39;, &#39;printable&#39;]</span>
+</pre></div>
+</div>
+<p>You can add your own payload list to your Abrupt or also use a list generated
+on the fly. Once the requests have been generated, you can send them:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">batch</span><span class="p">()</span>
 <span class="go">Running 9 requests...done.</span>
-
 <span class="gp">&gt;&gt;&gt; </span><span class="n">batch</span>
 <span class="go">{200:9 | phrack.org}</span>
-
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">batch</span>
 <span class="go">Id Method Path         Query                          Status Length</span>
 <span class="go">0  GET    /issues.html issue=%27                      200    2390</span>
@@ -209,6 +234,7 @@ global variable. Before being injected, each payload is pass through the
 <span class="go">8  GET    /issues.html issue=%3Becho+123456           200    2390</span>
 </pre></div>
 </div>
+<p>Read more about this function in the <a class="reference internal" href="injection.html#module-injection" title="injection"><tt class="xref py py-mod docutils literal"><span class="pre">injection</span></tt></a> module.</p>
 </div>
 </div>
 <div class="section" id="reference">
@@ -218,7 +244,7 @@ global variable. Before being injected, each payload is pass through the
 <li class="toctree-l1"><a class="reference internal" href="http.html">abrupt.http - HTTP base classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="proxy.html">abrupt.proxy - HTTP(S) Proxy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="injection.html">abrupt.injection - Request generator</a></li>
-<li class="toctree-l1"><a class="reference internal" href="history.html">abrupt.history - Global history</a></li>
+<li class="toctree-l1"><a class="reference internal" href="session.html">abrupt.session - Session handler</a></li>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">abrupt.conf - Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="real-world.html">Real World Examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="real-world.html#csrf-protected-form">CSRF Protected Form</a></li>
@@ -252,6 +278,9 @@ global variable. Before being injected, each payload is pass through the
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="http.html" title="abrupt.http - HTTP base classes"
              >next</a> |</li>

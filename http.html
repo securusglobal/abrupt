@@ -41,6 +41,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="proxy.html" title="abrupt.proxy - HTTP(S) Proxy"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -54,240 +57,300 @@
       <div class="documentwrapper">
           <div class="body">
             
-  <div class="section" id="abrupt-http-http-base-classes">
-<h1>abrupt.http - HTTP base classes<a class="headerlink" href="#abrupt-http-http-base-classes" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-http">
+<span id="abrupt-http-http-base-classes"></span><h1>abrupt.http - HTTP base classes<a class="headerlink" href="#module-http" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
-<dt id="Request">
-<em class="property">class </em><tt class="descname">Request</tt><big>(</big><em>fp</em><span class="optional">[</span>, <em>hostname=None</em>, <em>port=80</em>, <em>use_ssl=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#Request" title="Permalink to this definition">¶</a></dt>
+<dt id="http.Request">
+<em class="property">class </em><tt class="descclassname">http.</tt><tt class="descname">Request</tt><big>(</big><em>fp</em><span class="optional">[</span>, <em>hostname=None</em>, <em>port=80</em>, <em>use_ssl=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#http.Request" title="Permalink to this definition">¶</a></dt>
 <dd><p>The Request class is the base of Abrupt. To create an instance, you have
 two options: either use a socket or a string representing the whole request
-into the constructor or use the <a class="reference internal" href="#c" title="c"><tt class="xref py py-func docutils literal"><span class="pre">c()</span></tt></a> function.
-Once created, the Request object have the following attributes:</p>
+into the constructor or use the <a class="reference internal" href="#http.create" title="http.create"><tt class="xref py py-func docutils literal"><span class="pre">create()</span></tt></a> function.
+The two methods __repr__ and __str__ have been defined to provide
+user friendly interaction inside the interpreter.</p>
 <dl class="attribute">
-<dt id="Request.method">
-<tt class="descname">method</tt><a class="headerlink" href="#Request.method" title="Permalink to this definition">¶</a></dt>
-<dd><p>Contains the HTTP method of the request. For instance, &#8220;GET&#8221;</p>
+<dt id="http.Request.method">
+<tt class="descname">method</tt><a class="headerlink" href="#http.Request.method" title="Permalink to this definition">¶</a></dt>
+<dd><p>Contains the HTTP method of the request. For instance, &#8220;GET&#8221;.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="Request.url">
-<tt class="descname">url</tt><a class="headerlink" href="#Request.url" title="Permalink to this definition">¶</a></dt>
+<dt id="http.Request.url">
+<tt class="descname">url</tt><a class="headerlink" href="#http.Request.url" title="Permalink to this definition">¶</a></dt>
 <dd><p>A 6-tuple result, see <a class="reference external" href="http://docs.python.org/library/urlparse.html">http://docs.python.org/library/urlparse.html</a></p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="Request.http_version">
-<tt class="descname">http_version</tt><a class="headerlink" href="#Request.http_version" title="Permalink to this definition">¶</a></dt>
-<dd><p>The HTTP version. For instance, &#8220;HTTP/1.1&#8221;</p>
+<dt id="http.Request.http_version">
+<tt class="descname">http_version</tt><a class="headerlink" href="#http.Request.http_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>The HTTP version. For instance, &#8220;HTTP/1.1&#8221;.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="Request.hostname">
-<tt class="descname">hostname</tt><a class="headerlink" href="#Request.hostname" title="Permalink to this definition">¶</a></dt>
-<dd><p>The hostname of the server. For instance, &#8220;phrack.org&#8221;</p>
+<dt id="http.Request.hostname">
+<tt class="descname">hostname</tt><a class="headerlink" href="#http.Request.hostname" title="Permalink to this definition">¶</a></dt>
+<dd><p>The hostname of the server. For instance, &#8220;phrack.org&#8221;.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="Request.port">
-<tt class="descname">port</tt><a class="headerlink" href="#Request.port" title="Permalink to this definition">¶</a></dt>
-<dd><p>The port used to connect to the server. By default &#8220;80&#8221;.</p>
+<dt id="http.Request.port">
+<tt class="descname">port</tt><a class="headerlink" href="#http.Request.port" title="Permalink to this definition">¶</a></dt>
+<dd><p>The port used to connect to the server. By default, 80.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="Request.use_ssl">
-<tt class="descname">use_ssl</tt><a class="headerlink" href="#Request.use_ssl" title="Permalink to this definition">¶</a></dt>
-<dd><p>A boolean indicating if SSL is used. By default, False</p>
+<dt id="http.Request.use_ssl">
+<tt class="descname">use_ssl</tt><a class="headerlink" href="#http.Request.use_ssl" title="Permalink to this definition">¶</a></dt>
+<dd><p>A boolean indicating if SSL is used. By default, False.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="Request.headers">
-<tt class="descname">headers</tt><a class="headerlink" href="#Request.headers" title="Permalink to this definition">¶</a></dt>
+<dt id="http.Request.headers">
+<tt class="descname">headers</tt><a class="headerlink" href="#http.Request.headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of pairs containing the headers.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="http.Request.path">
+<tt class="descname">path</tt><a class="headerlink" href="#http.Request.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>The path of the request. For instance, &#8220;/index.html&#8221;. This attribute is
+defined as read-only. To modify the path, use the <a class="reference internal" href="#http.Request.url" title="http.Request.url"><tt class="xref py py-attr docutils literal"><span class="pre">url</span></tt></a> attribute.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="http.Request.query">
+<tt class="descname">query</tt><a class="headerlink" href="#http.Request.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>The query. For instance, &#8220;issue=32&amp;debug=false&#8221;. This attribute is
+read-only. To modify the query, use <a class="reference internal" href="#http.Request.url" title="http.Request.url"><tt class="xref py py-attr docutils literal"><span class="pre">url</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="http.Request.cookies">
+<tt class="descname">cookies</tt><a class="headerlink" href="#http.Request.cookies" title="Permalink to this definition">¶</a></dt>
+<dd><p>A python cookie, see <a class="reference external" href="http://docs.python.org/library/cookie.html">http://docs.python.org/library/cookie.html</a>. This
+attribute is read-only, based on the <a class="reference internal" href="#http.Request.headers" title="http.Request.headers"><tt class="xref py py-attr docutils literal"><span class="pre">headers</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="http.Request.response">
+<tt class="descname">response</tt><a class="headerlink" href="#http.Request.response" title="Permalink to this definition">¶</a></dt>
+<dd><p>The associated response, once the request has been made to the server.
+For more information, see <a class="reference internal" href="#http.Response" title="http.Response"><tt class="xref py py-class docutils literal"><span class="pre">Response</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">()</tt></dt>
+<dd><p>Do the request. Includes connect to the server, send the request,
+read the response, create the corresponding <a class="reference internal" href="#http.Response" title="http.Response"><tt class="xref py py-class docutils literal"><span class="pre">Response</span></tt></a>
+object and add itself to the <a class="reference internal" href="#http.history" title="http.history"><tt class="xref py py-data docutils literal"><span class="pre">history</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="http.Request.follow">
+<tt class="descname">follow</tt><big>(</big><big>)</big><a class="headerlink" href="#http.Request.follow" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the request&#8217;s response is a HTTP redirection, calling this function
+will return a request following the redirection. This function is still
+considered as experimental, please code your own and share it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="http.Request._update_content_length">
+<tt class="descname">_update_content_length</tt><big>(</big><big>)</big><a class="headerlink" href="#http.Request._update_content_length" title="Permalink to this definition">¶</a></dt>
+<dd><p>In case you change the body of the request.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="http.Request.copy">
+<tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#http.Request.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new request based on the current, without the response.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="http.Request.edit">
+<tt class="descname">edit</tt><big>(</big><big>)</big><a class="headerlink" href="#http.Request.edit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start your editor to edit the request, the new request is returned.
+See the configuration parameter <a class="reference internal" href="configuration.html#conf.Configuration.editor" title="conf.Configuration.editor"><tt class="xref py py-attr docutils literal"><span class="pre">editor</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="http.Request.play">
+<tt class="descname">play</tt><big>(</big><em>options</em><big>)</big><a class="headerlink" href="#http.Request.play" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start your editor with two windows. Each time the request file is saved,
+the request is made to the server and the response updated. When the
+editor terminates, the last valid request made is returned.
+By default, <cite>options</cite> is set to configure <tt class="docutils literal"><span class="pre">vim</span></tt>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="http.Request.extract">
+<tt class="descname">extract</tt><big>(</big><em>field</em><big>)</big><a class="headerlink" href="#http.Request.extract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract a particular field of the request. See
+<a class="reference internal" href="#http.RequestSet.extract" title="http.RequestSet.extract"><tt class="xref py py-meth docutils literal"><span class="pre">extract()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="http.Request.i">
+<tt class="descname">i</tt><big>(</big><big>)</big><a class="headerlink" href="#http.Request.i" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shortcut for <a class="reference internal" href="injection.html#injection.inject" title="injection.inject"><tt class="xref py py-func docutils literal"><span class="pre">inject()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="http.Request.i_at">
+<tt class="descname">i_at</tt><big>(</big><big>)</big><a class="headerlink" href="#http.Request.i_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shortcut for <a class="reference internal" href="injection.html#injection.inject_at" title="injection.inject_at"><tt class="xref py py-func docutils literal"><span class="pre">inject_at()</span></tt></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="http.Response">
+<em class="property">class </em><tt class="descclassname">http.</tt><tt class="descname">Response</tt><big>(</big><em>fd</em><big>)</big><a class="headerlink" href="#http.Response" title="Permalink to this definition">¶</a></dt>
+<dd><p>You will never use directly the constructor of Response, instead use
+the Request attribute <a class="reference internal" href="#http.Request.response" title="http.Request.response"><tt class="xref py py-attr docutils literal"><span class="pre">response</span></tt></a>.</p>
+<dl class="attribute">
+<dt id="http.Response.status">
+<tt class="descname">status</tt><a class="headerlink" href="#http.Response.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>The status of the response. For instance, &#8220;404&#8221; or &#8220;200&#8221;.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="http.Response.reason">
+<tt class="descname">reason</tt><a class="headerlink" href="#http.Response.reason" title="Permalink to this definition">¶</a></dt>
+<dd><p>The reason. For instance, &#8220;Not Found&#8221;.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="http.Response.http_version">
+<tt class="descname">http_version</tt><a class="headerlink" href="#http.Response.http_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>The version. For instance, &#8220;HTTP/1.1&#8221;.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="http.Response.headers">
+<tt class="descname">headers</tt><a class="headerlink" href="#http.Response.headers" title="Permalink to this definition">¶</a></dt>
 <dd><p>List of couple containing the headers.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="Request.path">
-<tt class="descname">path</tt><a class="headerlink" href="#Request.path" title="Permalink to this definition">¶</a></dt>
-<dd><p>The path of the request. For instance, &#8220;/index.html&#8221;. This attribute is
-defined as read-only. To modify the path, use the <a class="reference internal" href="#Request.url" title="Request.url"><tt class="xref py py-attr docutils literal"><span class="pre">url</span></tt></a> attribute.</p>
+<dt id="http.Response.raw_content">
+<tt class="descname">raw_content</tt><a class="headerlink" href="#http.Response.raw_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>The content returned by the server. It could be compressed or chunked.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="Request.query">
-<tt class="descname">query</tt><a class="headerlink" href="#Request.query" title="Permalink to this definition">¶</a></dt>
-<dd><p>The query. For instance, &#8220;issue=32&amp;debug=false&#8221;. This attribute is
-read-only. To modify the query, use <a class="reference internal" href="#Request.url" title="Request.url"><tt class="xref py py-attr docutils literal"><span class="pre">url</span></tt></a>.</p>
+<dt id="http.Response.content">
+<tt class="descname">content</tt><a class="headerlink" href="#http.Response.content" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decoded content, as displayed by your browser.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="Request.cookies">
-<tt class="descname">cookies</tt><a class="headerlink" href="#Request.cookies" title="Permalink to this definition">¶</a></dt>
+<dt id="http.Response.cookies">
+<tt class="descname">cookies</tt><a class="headerlink" href="#http.Response.cookies" title="Permalink to this definition">¶</a></dt>
 <dd><p>A python cookie, see <a class="reference external" href="http://docs.python.org/library/cookie.html">http://docs.python.org/library/cookie.html</a>. This
-attribute is read-only, based on the <a class="reference internal" href="#Request.headers" title="Request.headers"><tt class="xref py py-attr docutils literal"><span class="pre">headers</span></tt></a></p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Request.response">
-<tt class="descname">response</tt><a class="headerlink" href="#Request.response" title="Permalink to this definition">¶</a></dt>
-<dd><p>The associated response, once the request has been made to the server.
-For more information, see <a class="reference internal" href="#Response" title="Response"><tt class="xref py py-class docutils literal"><span class="pre">Response</span></tt></a></p>
-</dd></dl>
-
-<p>The Request class define both __repr__ and __str__ for a different behavior
-when called using the interpreter. The other methods available are:</p>
-<dl class="method">
-<dt id="Request.__call__">
-<tt class="descname">__call__</tt><big>(</big><big>)</big><a class="headerlink" href="#Request.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>make the request</p>
+attribute is read-only, based on the <a class="reference internal" href="#http.Response.headers" title="http.Response.headers"><tt class="xref py py-attr docutils literal"><span class="pre">headers</span></tt></a></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="Request._update_content_length">
-<tt class="descname">_update_content_length</tt><big>(</big><big>)</big><a class="headerlink" href="#Request._update_content_length" title="Permalink to this definition">¶</a></dt>
-<dd><p>in case you change the body of the request</p>
+<dt id="http.Response.raw">
+<tt class="descname">raw</tt><big>(</big><big>)</big><a class="headerlink" href="#http.Response.raw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the full response including headers and raw_content.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="Request.copy">
-<tt class="descname">copy</tt><big>(</big><big>)</big><a class="headerlink" href="#Request.copy" title="Permalink to this definition">¶</a></dt>
-<dd><p>create a new request based on the current, without the response</p>
+<dt id="http.Response.preview">
+<tt class="descname">preview</tt><big>(</big><big>)</big><a class="headerlink" href="#http.Response.preview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start your browser on a static dump of the response.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="Request.edit">
-<tt class="descname">edit</tt><big>(</big><big>)</big><a class="headerlink" href="#Request.edit" title="Permalink to this definition">¶</a></dt>
-<dd><p>start your favorite EDITOR to edit the request, the new request is
-returned. If the environment variable EDITOR has not been set, &#8216;vim&#8217;
-will be used.</p>
+<dt id="http.Response.view">
+<tt class="descname">view</tt><big>(</big><big>)</big><a class="headerlink" href="#http.Response.view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start your editor on the response.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="Request.play">
-<tt class="descname">play</tt><big>(</big><em>options</em><big>)</big><a class="headerlink" href="#Request.play" title="Permalink to this definition">¶</a></dt>
-<dd><p>start your EDITOR with two windows. Each time the request file is saved,
-the request is made to the server and the response updated. By default,
-options is set up for Vim. When the editor terminates, the last valid
-request made is returned.</p>
+<dt id="http.Response.extract">
+<tt class="descname">extract</tt><big>(</big><em>field</em><big>)</big><a class="headerlink" href="#http.Response.extract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract information on the request. See <a class="reference internal" href="#http.RequestSet.extract" title="http.RequestSet.extract"><tt class="xref py py-func docutils literal"><span class="pre">extract()</span></tt></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="http.RequestSet">
+<em class="property">class </em><tt class="descclassname">http.</tt><tt class="descname">RequestSet</tt><big>(</big><span class="optional">[</span><em>reqs=None</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#http.RequestSet" title="Permalink to this definition">¶</a></dt>
+<dd><p>RequestSet is just an easy way to group some <a class="reference internal" href="#http.Request" title="http.Request"><tt class="xref py py-class docutils literal"><span class="pre">Request</span></tt></a>. It
+behave like a list. You can access element at a specific index
+with the <cite>[]</cite> operator. <cite>append</cite>, <cite>extend</cite>, <cite>pop</cite>, <cite>+</cite> will behave as
+expected.</p>
+<dl class="method">
+<dt id="http.RequestSet.filter">
+<tt class="descname">filter</tt><big>(</big><em>predicate</em><big>)</big><a class="headerlink" href="#http.RequestSet.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter the RequestSet according to the supplied predicate. For
+instance, to filter by hostname, you can use
+<tt class="docutils literal"><span class="pre">rs.filter(lambda</span> <span class="pre">x:</span> <span class="pre">x.hostname</span> <span class="pre">==</span> <span class="pre">&quot;phrack.org&quot;)</span></tt>.
+To filter the requests which response&#8217;s content matches a
+regular expression:
+<tt class="docutils literal"><span class="pre">rs.filter(lambda</span> <span class="pre">x:</span> <span class="pre">re.search(r'Error',</span> <span class="pre">x.response.content))</span></tt></p>
 </dd></dl>
 
 <dl class="method">
-<dt id="Request.extract">
-<tt class="descname">extract</tt><big>(</big><em>field</em><big>)</big><a class="headerlink" href="#Request.extract" title="Permalink to this definition">¶</a></dt>
-<dd><p>extract information on the request. See RequestSet.extract</p>
+<dt id="http.RequestSet.extract">
+<tt class="descname">extract</tt><big>(</big><em>arg</em>, <em>from_response=None</em><big>)</big><a class="headerlink" href="#http.RequestSet.extract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a specific attribute for all the requests. For instance,
+<tt class="docutils literal"><span class="pre">rs.extract(&quot;hostname&quot;)</span></tt>. It will look up the argument in the request&#8217;s
+attribute, URL paramaters, POST content, cookies, response attributes and
+response cookies, in this order. If only the response should be looked
+up, set <cite>from_response</cite> to <cite>True</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<tt class="descname">()</tt></dt>
+<dd><p>Make all the requests contained in the RequestSet only if they are
+all using the same host and port. An exception is raised if it is
+not the case.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="http.RequestSet.cmp">
+<tt class="descname">cmp</tt><big>(</big><em>i1</em>, <em>i2</em><big>)</big><a class="headerlink" href="#http.RequestSet.cmp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start your <a class="reference internal" href="configuration.html#conf.Configuration.diff_editor" title="conf.Configuration.diff_editor"><tt class="xref py py-attr docutils literal"><span class="pre">diff_editor</span></tt></a> with the two
+requests at index <cite>i1</cite> and <cite>i2</cite>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="http.RequestSet.cmp_response">
+<tt class="descname">cmp_response</tt><big>(</big><em>i1</em>, <em>i2</em><big>)</big><a class="headerlink" href="#http.RequestSet.cmp_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start your <a class="reference internal" href="configuration.html#conf.Configuration.diff_editor" title="conf.Configuration.diff_editor"><tt class="xref py py-attr docutils literal"><span class="pre">diff_editor</span></tt></a> with the two
+responses of the requests at index <cite>i1</cite> and <cite>i2</cite>.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="function">
-<dt id="c">
-<tt class="descname">c</tt><big>(</big><em>url</em><big>)</big><a class="headerlink" href="#c" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a Request based on a URL. For instance <cite>c(&#8220;http://www.phrack.org&#8221;)</cite>.
-Some headers are automatically added to the request (User-Agent, Accept,
-Accept-Encoding, Accept-Language, Accept-Charset, Keep-Alive, Connection).</p>
+<dt id="http.create">
+<tt class="descclassname">http.</tt><tt class="descname">create</tt><big>(</big><em>url</em><big>)</big><a class="headerlink" href="#http.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>aliased <cite>c</cite></p>
+<p>Create a <a class="reference internal" href="#http.Request" title="http.Request"><tt class="xref py py-class docutils literal"><span class="pre">Request</span></tt></a> based on a URL. For instance
+<tt class="docutils literal"><span class="pre">c(&quot;http://www.phrack.org&quot;)</span></tt>. Some headers are automatically added
+to the request (User-Agent, Accept, Accept-Encoding, Accept-Language,
+Accept-Charset).</p>
 </dd></dl>
 
-<dl class="class">
-<dt id="Response">
-<em class="property">class </em><tt class="descname">Response</tt><big>(</big><em>fd</em><big>)</big><a class="headerlink" href="#Response" title="Permalink to this definition">¶</a></dt>
-<dd><p>You will never use directly the constructor of Response, instead reference
-a response object as a request result.</p>
-<dl class="attribute">
-<dt id="Response.status">
-<tt class="descname">status</tt><a class="headerlink" href="#Response.status" title="Permalink to this definition">¶</a></dt>
-<dd><p>The status of the response. For instance, &#8220;404&#8221; or &#8220;200&#8221;.</p>
+<dl class="function">
+<dt id="http.compare">
+<tt class="descclassname">http.</tt><tt class="descname">compare</tt><big>(</big><em>r1</em>, <em>r2</em><big>)</big><a class="headerlink" href="#http.compare" title="Permalink to this definition">¶</a></dt>
+<dd><p>aliased <cite>cmp</cite></p>
+<p>Start your <a class="reference internal" href="configuration.html#conf.Configuration.diff_editor" title="conf.Configuration.diff_editor"><tt class="xref py py-attr docutils literal"><span class="pre">diff_editor</span></tt></a> with the two requests
+or responses side by side.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="Response.reason">
-<tt class="descname">reason</tt><a class="headerlink" href="#Response.reason" title="Permalink to this definition">¶</a></dt>
-<dd><p>The reason. For instance, &#8220;Not Found&#8221;</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Response.http_version">
-<tt class="descname">http_version</tt><a class="headerlink" href="#Response.http_version" title="Permalink to this definition">¶</a></dt>
-<dd><p>The version. For instance, &#8220;HTTP/1.1&#8221;</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Response.headers">
-<tt class="descname">headers</tt><a class="headerlink" href="#Response.headers" title="Permalink to this definition">¶</a></dt>
-<dd><p>List of couple containing the headers.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Response.content">
-<tt class="descname">content</tt><a class="headerlink" href="#Response.content" title="Permalink to this definition">¶</a></dt>
-<dd><p>The content returned by the server. It could be compressed or chunked.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Response.readable_content">
-<tt class="descname">readable_content</tt><a class="headerlink" href="#Response.readable_content" title="Permalink to this definition">¶</a></dt>
-<dd><p>Decoded content, as displayed by your browser.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="Response.cookies">
-<tt class="descname">cookies</tt><a class="headerlink" href="#Response.cookies" title="Permalink to this definition">¶</a></dt>
-<dd><p>A python cookie, see <a class="reference external" href="http://docs.python.org/library/cookie.html">http://docs.python.org/library/cookie.html</a>. This
-attribute is read-only, based on the <a class="reference internal" href="#Response.headers" title="Response.headers"><tt class="xref py py-attr docutils literal"><span class="pre">headers</span></tt></a></p>
-</dd></dl>
-
-<dl class="method">
-<dt id="Response.raw">
-<tt class="descname">raw</tt><big>(</big><big>)</big><a class="headerlink" href="#Response.raw" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the full response including headers and content.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="Response.preview">
-<tt class="descname">preview</tt><big>(</big><big>)</big><a class="headerlink" href="#Response.preview" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start your browser on a static dump of the response.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="Response.extract">
-<tt class="descname">extract</tt><big>(</big><em>field</em><big>)</big><a class="headerlink" href="#Response.extract" title="Permalink to this definition">¶</a></dt>
-<dd><p>extract information on the request. See RequestSet.extract</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="RequestSet">
-<em class="property">class </em><tt class="descname">RequestSet</tt><big>(</big><span class="optional">[</span><em>reqs=None</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#RequestSet" title="Permalink to this definition">¶</a></dt>
-<dd><p>RequestSet is just an easy way to group request. It basically behave like a
-list. You can access element at a specific index with the <cite>[]</cite> operator.
-The main methods are:</p>
-<dl class="method">
-<dt id="RequestSet.filter">
-<tt class="descname">filter</tt><big>(</big><em>**kwds</em><big>)</big><a class="headerlink" href="#RequestSet.filter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Filter the RequestSet according to some conditions and return a new
-RequestSet containing only the request matching all the conditions. For
-instance, to filter by hostname, you can use <cite>rs.filter(hostname=&#8217;phrack.org&#8217;)</cite>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="RequestSet.extract">
-<tt class="descname">extract</tt><big>(</big><em>arg</em><big>)</big><a class="headerlink" href="#RequestSet.extract" title="Permalink to this definition">¶</a></dt>
-<dd><p>Base on the same idea as filter, it returns a specific attribute for all the
-request. For instance, <cite>rs.extract(&#8220;hostname&#8221;)</cite></p>
-</dd></dl>
-
-<dl class="method">
-<dt id="RequestSet.__call__">
-<tt class="descname">__call__</tt><big>(</big><big>)</big><a class="headerlink" href="#RequestSet.__call__" title="Permalink to this definition">¶</a></dt>
-<dd><p>Make all the requests contained in the RequestSet only if they are all using
-the same host and port. An exception is raised if it is not the case.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="RequestSet.save">
-<tt class="descname">save</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#RequestSet.save" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save the request set. Use load(name) to load it.</p>
-</dd></dl>
-
+<dl class="data">
+<dt id="http.history">
+<tt class="descclassname">http.</tt><tt class="descname">history</tt><a class="headerlink" href="#http.history" title="Permalink to this definition">¶</a></dt>
+<dd><p>History is a <a class="reference internal" href="#http.RequestSet" title="http.RequestSet"><tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt></a> which contains all the requests made through
+Abrupt. To turn it off, set <a class="reference internal" href="configuration.html#conf.Configuration.history" title="conf.Configuration.history"><tt class="xref py py-attr docutils literal"><span class="pre">history</span></tt></a> to False.</p>
 </dd></dl>
 
 </div>
@@ -303,6 +366,9 @@ the same host and port. An exception is raised if it is not the case.</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="proxy.html" title="abrupt.proxy - HTTP(S) Proxy"
              >next</a> |</li>

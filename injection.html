@@ -22,7 +22,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Abrupt v0.2 documentation" href="index.html" />
-    <link rel="next" title="abrupt.history - Global history" href="history.html" />
+    <link rel="next" title="abrupt.session - Session handler" href="session.html" />
     <link rel="prev" title="abrupt.proxy - HTTP(S) Proxy" href="proxy.html" /> 
   </head>
   <body>
@@ -41,7 +41,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="history.html" title="abrupt.history - Global history"
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="session.html" title="abrupt.session - Session handler"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="proxy.html" title="abrupt.proxy - HTTP(S) Proxy"
@@ -54,14 +57,15 @@
       <div class="documentwrapper">
           <div class="body">
             
-  <div class="section" id="abrupt-injection-request-generator">
-<h1>abrupt.injection - Request generator<a class="headerlink" href="#abrupt-injection-request-generator" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-injection">
+<span id="abrupt-injection-request-generator"></span><h1>abrupt.injection - Request generator<a class="headerlink" href="#module-injection" title="Permalink to this headline">¶</a></h1>
 <p>The injection module provides two functions to &#8220;inject&#8221; a request (i.e.,
-generate a <a class="reference internal" href="http.html#RequestSet" title="RequestSet"><tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt></a> from a Request using a list of payloads):</p>
+generate a <tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt> from a Request using a list of payloads):</p>
 <dl class="function">
-<dt id="i">
-<tt class="descname">i</tt><big>(</big><em>request</em>, <em>**kwds</em><span class="optional">[</span>, <em>pre_func=e</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#i" title="Permalink to this definition">¶</a></dt>
-<dd><p>For each keyword, this function will try to find the key in the request
+<dt id="injection.inject">
+<tt class="descclassname">injection.</tt><tt class="descname">inject</tt><big>(</big><em>request</em>, <em>**kwds</em><span class="optional">[</span>, <em>pre_func=e</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#injection.inject" title="Permalink to this definition">¶</a></dt>
+<dd><p>aliased <cite>i</cite></p>
+<p>For each keyword, this function will try to find the key in the request
 at the following locations:</p>
 <blockquote>
 <div><ul class="simple">
@@ -72,7 +76,7 @@ at the following locations:</p>
 </div></blockquote>
 <p>Then, each value will be injected at the parameter location and a set
 of request returned. The values could be either a list of payload
-(e.g., id=[1,2,3]) or a key of the global dictionnary <a class="reference internal" href="#payloads" title="payloads"><tt class="xref py py-data docutils literal"><span class="pre">payloads</span></tt></a>
+(e.g., id=[1,2,3]) or a key of the global dictionnary <a class="reference internal" href="#injection.payloads" title="injection.payloads"><tt class="xref py py-data docutils literal"><span class="pre">payloads</span></tt></a>
 (e.g., name=&#8221;default&#8221;).</p>
 <p>Some examples:</p>
 <div class="highlight-python"><pre>In [1]: print r
@@ -94,9 +98,10 @@ being injected. By default, it urlencode the payload.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="i_at">
-<tt class="descname">i_at</tt><big>(</big><em>request</em>, <em>offset</em>, <em>payload</em><span class="optional">[</span>, <em>pre_func=e</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#i_at" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function inject the request at a specific offset, between
+<dt id="injection.inject_at">
+<tt class="descclassname">injection.</tt><tt class="descname">inject_at</tt><big>(</big><em>request</em>, <em>offset</em>, <em>payload</em><span class="optional">[</span>, <em>pre_func=e</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#injection.inject_at" title="Permalink to this definition">¶</a></dt>
+<dd><p>aliased i_at</p>
+<p>This function inject the request at a specific offset, between
 two offset position or instead a token.
 If <em>offset</em> is an integer, the payload will be inserted
 at this position. If <em>offset</em> is a range (e.g., (23,29)) this range will
@@ -108,8 +113,8 @@ if more than one occurrence exists, an exception will be raised.</p>
 <p>Once the RequestSet has been generated, you can execute it. The payloads
 are available in a global dictionnary:</p>
 <dl class="data">
-<dt id="payloads">
-<tt class="descname">payloads</tt><a class="headerlink" href="#payloads" title="Permalink to this definition">¶</a></dt>
+<dt id="injection.payloads">
+<tt class="descclassname">injection.</tt><tt class="descname">payloads</tt><a class="headerlink" href="#injection.payloads" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dictionnary containing all the payloads. Each value is a list of
 string. When started, Abrupt load all the files under the directory
 &#8220;payloads&#8221; and create the corresponding key.</p>
@@ -127,14 +132,14 @@ app vulnerabilities.</li>
 
 <p>Some handy functions are also defined:</p>
 <dl class="function">
-<dt id="e">
-<tt class="descname">e</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#e" title="Permalink to this definition">¶</a></dt>
+<dt id="injection.e">
+<tt class="descclassname">injection.</tt><tt class="descname">e</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#injection.e" title="Permalink to this definition">¶</a></dt>
 <dd><p>urlquote(x)</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="d">
-<tt class="descname">d</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#d" title="Permalink to this definition">¶</a></dt>
+<dt id="injection.d">
+<tt class="descclassname">injection.</tt><tt class="descname">d</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#injection.d" title="Permalink to this definition">¶</a></dt>
 <dd><p>urlunquote(x)</p>
 </dd></dl>
 
@@ -152,7 +157,10 @@ app vulnerabilities.</li>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="history.html" title="abrupt.history - Global history"
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="session.html" title="abrupt.session - Session handler"
              >next</a> |</li>
         <li class="right" >
           <a href="proxy.html" title="abrupt.proxy - HTTP(S) Proxy"

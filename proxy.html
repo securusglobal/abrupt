@@ -41,6 +41,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="injection.html" title="abrupt.injection - Request generator"
              accesskey="N">next</a> |</li>
         <li class="right" >
@@ -54,18 +57,40 @@
       <div class="documentwrapper">
           <div class="body">
             
-  <div class="section" id="abrupt-proxy-http-s-proxy">
-<h1>abrupt.proxy - HTTP(S) Proxy<a class="headerlink" href="#abrupt-proxy-http-s-proxy" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-proxy">
+<span id="abrupt-proxy-http-s-proxy"></span><h1>abrupt.proxy - HTTP(S) Proxy<a class="headerlink" href="#module-proxy" title="Permalink to this headline">¶</a></h1>
 <p>To start a proxy, you can use the intercept method also known as p:</p>
 <dl class="function">
-<dt id="p">
-<tt class="descname">p</tt><big>(</big><span class="optional">[</span><em>port=8080</em>, <em>prompt=True</em>, <em>nb=-1</em>, <em>filter=re_filter_images</em>, <em>verbose=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#p" title="Permalink to this definition">¶</a></dt>
-<dd><p>Start a new proxy server on port <em>port</em>. If <em>prompt</em> is True, directions will be
-asked for every request. <em>nb</em> requests will be intercepted at most. The argument
-<em>filter</em> should be a regular expression on the urls to filter. By default, images
-are filtered. If <em>verbose</em> is True, the whole request is displayed instead of a
-summary.</p>
-<p>This function return a <a class="reference internal" href="http.html#RequestSet" title="RequestSet"><tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt></a> of all the successful <a class="reference internal" href="http.html#Request" title="Request"><tt class="xref py py-class docutils literal"><span class="pre">Request</span></tt></a> made.</p>
+<dt id="proxy.proxy">
+<tt class="descclassname">proxy.</tt><tt class="descname">proxy</tt><big>(</big><em>port=conf.port, nb=-1, rules=None, default_action='a', alerter=None, persistent=False, verbose=False]</em><big>)</big><a class="headerlink" href="#proxy.proxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>aliased <cite>p</cite></p>
+<p>Start a new proxy server on port <cite>port</cite>. At most, <cite>nb</cite> requests will be
+served. If <cite>nb</cite> is <cite>-1</cite>, the proxy will process requests until stopped.</p>
+<p><cite>rules</cite> is a list of pair where the first element is a predicate and the
+second a rule to execute when the predicate is true. If no rules applies,
+the <cite>default_action</cite> will be executed.
+For instance:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="p">(</span><span class="n">rules</span> <span class="o">=</span> <span class="p">((</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">hostname</span> <span class="o">!=</span> <span class="s">&quot;www.lemonde.fr&quot;</span><span class="p">,</span> <span class="s">&quot;d&quot;</span><span class="p">),))</span>
+</pre></div>
+</div>
+<p>will (d)rop any requests which hostname is not equal to &#8220;www.lemonde.fr&#8221;.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="p">(</span><span class="n">rules</span> <span class="o">=</span> <span class="p">((</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;GET&quot;</span><span class="p">,</span> <span class="s">&quot;f&quot;</span><span class="p">),</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s">&quot;POST&quot;</span><span class="p">,</span> <span class="s">&quot;d&quot;</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>will drop any POST requests, forward GET requests and ask the user for any other method.</p>
+<p><cite>alerter</cite> should be an object from derived from <tt class="xref py py-class docutils literal"><span class="pre">alert.Generic</span></tt>. It will be called
+after each requests to lookup trivial outstanding responses. If <cite>None</cite> is supplied,
+an instance of <tt class="xref py py-class docutils literal"><span class="pre">alerter.Generic</span></tt> will be used.</p>
+<p>To keep the connection alive with your client, set <cite>persistent</cite> to <cite>True</cite>. This will
+increase the performance of the proxy but it is only useful if your client is aware that
+only one connection can be establish with the proxy.
+In Firefox, set <tt class="docutils literal"><span class="pre">network.http.max-persistent-connections-per-proxy</span></tt> to 1.</p>
+<p><cite>verbose</cite> determine the verbosity degree. If <cite>False</cite>, only the requests undergoing
+the <cite>default_action</cite> will be displayed. If equals to <cite>1</cite>, all the requests,
+including the one automatically processed will be displayed. If <cite>2</cite>, all the requests
+will be displayed, including their full content. If <cite>3</cite>, all the requests and responses
+will be displayed, including their full content.</p>
+<p>This function return a <tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt> of all the successful <tt class="xref py py-class docutils literal"><span class="pre">Request</span></tt> made.</p>
 </dd></dl>
 
 </div>
@@ -81,6 +106,9 @@ summary.</p>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
         <li class="right" >
           <a href="injection.html" title="abrupt.injection - Request generator"
              >next</a> |</li>
