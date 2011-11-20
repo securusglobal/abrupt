@@ -6,13 +6,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>abrupt.injection - Request generator &mdash; Abrupt v0.2 documentation</title>
+    <title>abrupt.injection - Request generator &mdash; Abrupt v0.4 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.2',
+        VERSION:     '0.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -21,7 +21,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Abrupt v0.2 documentation" href="index.html" />
+    <link rel="top" title="Abrupt v0.4 documentation" href="index.html" />
     <link rel="next" title="abrupt.session - Session handler" href="session.html" />
     <link rel="prev" title="abrupt.proxy - HTTP(S) Proxy" href="proxy.html" /> 
   </head>
@@ -31,7 +31,7 @@
   /_\ | |__ _ _ _  _ _ __| |_ 
  / _ \| '_ \ '_| || | '_ \  _|
 /_/ \_\_.__/_|  \_,_| .__/\__|
-                 0.2|_|       
+                 0.4|_|       
 </pre>
 
     <div class="related">
@@ -49,7 +49,7 @@
         <li class="right" >
           <a href="proxy.html" title="abrupt.proxy - HTTP(S) Proxy"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Abrupt v0.2 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Abrupt v0.4 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -59,88 +59,77 @@
             
   <div class="section" id="module-injection">
 <span id="abrupt-injection-request-generator"></span><h1>abrupt.injection - Request generator<a class="headerlink" href="#module-injection" title="Permalink to this headline">¶</a></h1>
-<p>The injection module provides two functions to &#8220;inject&#8221; a request (i.e.,
-generate a <tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt> from a Request using a list of payloads):</p>
 <dl class="function">
 <dt id="injection.inject">
-<tt class="descclassname">injection.</tt><tt class="descname">inject</tt><big>(</big><em>request</em>, <em>**kwds</em><span class="optional">[</span>, <em>pre_func=e</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#injection.inject" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">injection.</tt><tt class="descname">inject</tt><big>(</big><em>request</em>, <em>to=None</em>, <em>at=None</em>, <em>payload=&quot;default&quot;</em><big>)</big><a class="headerlink" href="#injection.inject" title="Permalink to this definition">¶</a></dt>
 <dd><p>aliased <cite>i</cite></p>
-<p>For each keyword, this function will try to find the key in the request
-at the following locations:</p>
-<blockquote>
-<div><ul class="simple">
-<li>URL parameters</li>
-<li>Cookies</li>
-<li>Content for a POST or PUT request</li>
-</ul>
-</div></blockquote>
-<p>Then, each value will be injected at the parameter location and a set
-of request returned. The values could be either a list of payload
-(e.g., id=[1,2,3]) or a key of the global dictionnary <a class="reference internal" href="#injection.payloads" title="injection.payloads"><tt class="xref py py-data docutils literal"><span class="pre">payloads</span></tt></a>
-(e.g., name=&#8221;default&#8221;).</p>
+<p>This function will create a RequestSet from a Request where a part
+of the latter is replaced with some payload. There is two way to use
+this function, either to inject the value of a parameter or to inject
+at a specific location.</p>
+<p>When used with the <cite>to</cite> parameter, Abrupt will look up the value
+in the query string, the request content and the cookies. It will
+then replace the value of the parameter with the payloads. If no
+valid injection point is found, an error is raised.</p>
+<p>When used with the <cite>at</cite> parameter, Abrupt will look up the string in the
+whole request text and replace it with the payloads. If no valid injection
+point is found, an error is raised. If the string is found more than
+once, the function will suggest to provide the &#8216;choice&#8217; integer keyword.</p>
+<p><cite>payload</cite> could either be a list of the payloads to inject or a key
+of the global dictionary <a class="reference internal" href="#injection.payloads" title="injection.payloads"><tt class="xref py py-data docutils literal"><span class="pre">payloads</span></tt></a>.</p>
 <p>Some examples:</p>
-<div class="highlight-python"><pre>In [1]: print r
-GET /issues.html?issue=59&amp;id=5 HTTP/1.1
-Host: www.phrack.com
-Cookie: PHPSESSID=4592a21fc9fd6b1e0afcc931eb74b28a
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">r</span>
+<span class="go">GET /issues.html?issue=59&amp;id=5 HTTP/1.1</span>
+<span class="go">Host: www.phrack.com</span>
+<span class="go">Cookie: PHPSESSID=4592a21fc9fd6b1e0afcc931eb74b28a</span>
 
-In [2]: i(r, id="default")
-Out[2]: {unknown:9 | www.phrack.com}
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s">&quot;id&quot;</span><span class="p">)</span>
+<span class="go">{unknown:9 | www.phrack.com}</span>
 
-In [3]: i(r, PHPSESSID=["1234","0000","31337-abcd"])
-Out[3]: {unknown:3 | www.phrack.com}
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s">&quot;PHPSESSID&quot;</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;1234&quot;</span><span class="p">,</span><span class="s">&quot;0000&quot;</span><span class="p">,</span><span class="s">&quot;31337-abcd&quot;</span><span class="p">])</span>
+<span class="go">{unknown:3 | www.phrack.com}</span>
 
-In [4]: i(r, issue="sqli")
-Out[4]: {unknown:106 | www.phrack.com}</pre>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s">&quot;issue&quot;</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="s">&quot;sqli&quot;</span><span class="p">)</span>
+<span class="go">{unknown:106 | www.phrack.com}</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">at</span><span class="o">=</span><span class="s">&quot;4592a21fc9fd6b1e0afcc931eb74b28a&quot;</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="s">&quot;sqli&quot;</span><span class="p">)</span>
+<span class="go">{unknown:106 | www.phrack.com}</span>
+</pre></div>
 </div>
-<p>The <em>pre_func</em> parameter is a function to apply to each payload before
+<p>The <cite>pre_func</cite> parameter is a function to apply to each payload before
 being injected. By default, it urlencode the payload.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="injection.inject_at">
-<tt class="descclassname">injection.</tt><tt class="descname">inject_at</tt><big>(</big><em>request</em>, <em>offset</em>, <em>payload</em><span class="optional">[</span>, <em>pre_func=e</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#injection.inject_at" title="Permalink to this definition">¶</a></dt>
-<dd><p>aliased i_at</p>
-<p>This function inject the request at a specific offset, between
-two offset position or instead a token.
-If <em>offset</em> is an integer, the payload will be inserted
-at this position. If <em>offset</em> is a range (e.g., (23,29)) this range will
-be erased with the payload. If <em>offset</em> is a string, it will be replaced
-by the payloads. In the latter scenario, if the string is not found or
-if more than one occurrence exists, an exception will be raised.</p>
-</dd></dl>
-
-<p>Once the RequestSet has been generated, you can execute it. The payloads
-are available in a global dictionnary:</p>
 <dl class="data">
 <dt id="injection.payloads">
 <tt class="descclassname">injection.</tt><tt class="descname">payloads</tt><a class="headerlink" href="#injection.payloads" title="Permalink to this definition">¶</a></dt>
-<dd><p>Dictionnary containing all the payloads. Each value is a list of
+<dd><p>Dictionary containing all the payloads. Each value is a list of
 string. When started, Abrupt load all the files under the directory
 &#8220;payloads&#8221; and create the corresponding key.</p>
 <dl class="docutils">
 <dt>By default, it contains:</dt>
 <dd><ul class="first last simple">
-<li>default, a minimal list of standard payload, targetting classic web
+<li>default, a minimal list of standard payload, targeting classic web
 app vulnerabilities.</li>
 <li>full, a larger list of standard payload.</li>
-<li>sqli, targetting SQL injection.</li>
+<li>sqli, targeting SQL injection.</li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
-<p>Some handy functions are also defined:</p>
 <dl class="function">
-<dt id="injection.e">
-<tt class="descclassname">injection.</tt><tt class="descname">e</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#injection.e" title="Permalink to this definition">¶</a></dt>
-<dd><p>urlquote(x)</p>
+<dt id="injection.encode">
+<tt class="descclassname">injection.</tt><tt class="descname">encode</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#injection.encode" title="Permalink to this definition">¶</a></dt>
+<dd><p>aliased <cite>e</cite></p>
+<p>urlquote(x)</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="injection.d">
-<tt class="descclassname">injection.</tt><tt class="descname">d</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#injection.d" title="Permalink to this definition">¶</a></dt>
-<dd><p>urlunquote(x)</p>
+<dt id="injection.decode">
+<tt class="descclassname">injection.</tt><tt class="descname">decode</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#injection.decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>aliased <cite>d</cite></p>
+<p>urlunquote(x)</p>
 </dd></dl>
 
 </div>
@@ -165,7 +154,7 @@ app vulnerabilities.</li>
         <li class="right" >
           <a href="proxy.html" title="abrupt.proxy - HTTP(S) Proxy"
              >previous</a> |</li>
-        <li><a href="index.html">Abrupt v0.2 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Abrupt v0.4 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

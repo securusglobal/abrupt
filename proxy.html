@@ -6,13 +6,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>abrupt.proxy - HTTP(S) Proxy &mdash; Abrupt v0.2 documentation</title>
+    <title>abrupt.proxy - HTTP(S) Proxy &mdash; Abrupt v0.4 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.2',
+        VERSION:     '0.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -21,7 +21,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Abrupt v0.2 documentation" href="index.html" />
+    <link rel="top" title="Abrupt v0.4 documentation" href="index.html" />
     <link rel="next" title="abrupt.injection - Request generator" href="injection.html" />
     <link rel="prev" title="abrupt.http - HTTP base classes" href="http.html" /> 
   </head>
@@ -31,7 +31,7 @@
   /_\ | |__ _ _ _  _ _ __| |_ 
  / _ \| '_ \ '_| || | '_ \  _|
 /_/ \_\_.__/_|  \_,_| .__/\__|
-                 0.2|_|       
+                 0.4|_|       
 </pre>
 
     <div class="related">
@@ -49,7 +49,7 @@
         <li class="right" >
           <a href="http.html" title="abrupt.http - HTTP base classes"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Abrupt v0.2 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Abrupt v0.4 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -79,7 +79,7 @@ For instance:</p>
 </div>
 <p>will drop any POST requests, forward GET requests and ask the user for any other method.</p>
 <p><cite>alerter</cite> should be an object from derived from <tt class="xref py py-class docutils literal"><span class="pre">alert.Generic</span></tt>. It will be called
-after each requests to lookup trivial outstanding responses. If <cite>None</cite> is supplied,
+after each requests to look up trivial outstanding responses. If <cite>None</cite> is supplied,
 an instance of <tt class="xref py py-class docutils literal"><span class="pre">alerter.Generic</span></tt> will be used.</p>
 <p>To keep the connection alive with your client, set <cite>persistent</cite> to <cite>True</cite>. This will
 increase the performance of the proxy but it is only useful if your client is aware that
@@ -115,7 +115,7 @@ will be displayed, including their full content.</p>
         <li class="right" >
           <a href="http.html" title="abrupt.http - HTTP base classes"
              >previous</a> |</li>
-        <li><a href="index.html">Abrupt v0.2 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Abrupt v0.4 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

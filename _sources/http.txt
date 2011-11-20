@@ -3,6 +3,13 @@ abrupt.http - HTTP base classes
 
 .. module:: http
 
+.. note:: In order to provide an easy user interaction and generic
+  functionalities, some assumptions are made on the request and response. In
+  most of the case, Abrupt tried to minimise these assumptions. To help you
+  to understand how the framework behave, most of these assumptions are
+  described here after. The complete list can be found in the source code 
+  using: ``grep -PRn "^[\s#]*ASSUMPTION.*(\s*#.*)*" . | sed -e 's/\s*#\sASSUMPTION:\s*/\n/' -e 's/\s*#\s*//'``
+
 .. class:: Request(fp, [hostname=None, port=80, use_ssl=False]) 
 
   The Request class is the base of Abrupt. To create an instance, you have 
@@ -59,7 +66,7 @@ abrupt.http - HTTP base classes
     The associated response, once the request has been made to the server.
     For more information, see :class:`~http.Response`.
 
-  .. method:: ()
+  .. method:: __call__()
     
     Do the request. Includes connect to the server, send the request,
     read the response, create the corresponding :class:`~http.Response` 
@@ -71,10 +78,6 @@ abrupt.http - HTTP base classes
     will return a request following the redirection. This function is still
     considered as experimental, please code your own and share it.
 
-  .. method:: _update_content_length()
-
-    In case you change the body of the request.
-
   .. method:: copy() 
 
     Create a new request based on the current, without the response.
@@ -84,6 +87,12 @@ abrupt.http - HTTP base classes
     Start your editor to edit the request, the new request is returned. 
     See the configuration parameter :attr:`~conf.Configuration.editor`.
 
+    .. note:: When editing a Request, you might change the content of a POST 
+      request. To be valid, the `Content-Length` header should be adapted to 
+      the new content length. Abrupt will automatically append the correct 
+      header if none is found. In other word, when editing a POST request, 
+      simply remove the `Content-Length` header and Abrupt will do the rest. 
+
   .. method:: play(options)
 
     Start your editor with two windows. Each time the request file is saved,
@@ -91,18 +100,12 @@ abrupt.http - HTTP base classes
     editor terminates, the last valid request made is returned.
     By default, `options` is set to configure ``vim``.
 
+    Please read the above note about Content-Length.
+
   .. method:: extract(field)
 
     Extract a particular field of the request. See 
     :meth:`~http.RequestSet.extract`.
-
-  .. method:: i()
-
-    Shortcut for :func:`~injection.inject`.
-
-  .. method:: i_at()
-
-    Shortcut for :func:`~injection.inject_at`.
 
 .. class:: Response(fd)
     
@@ -152,7 +155,7 @@ abrupt.http - HTTP base classes
 
   .. method:: extract(field)
 
-    Extract information on the request. See :func:`~http.RequestSet.extract`
+    Extract information on the response. See :func:`~http.RequestSet.extract`
 
 .. class:: RequestSet([reqs=None])
 
@@ -174,15 +177,31 @@ abrupt.http - HTTP base classes
     
     Returns a specific attribute for all the requests. For instance, 
     ``rs.extract("hostname")``. It will look up the argument in the request's
-    attribute, URL paramaters, POST content, cookies, response attributes and
+    attribute, URL parameters, POST content, cookies, response attributes and
     response cookies, in this order. If only the response should be looked
     up, set `from_response` to `True`.
 
-  .. method:: ()
+  .. method:: __call__([force=False, randomised=False, post_call=None, verbose=False])
   
-    Make all the requests contained in the RequestSet only if they are 
-    all using the same host and port. An exception is raised if it is 
-    not the case.
+    Send all the requests contained in the RequestSet. This call is only 
+    valid if the requests are all using the same host and port. 
+    An exception is raised if it is not the case.
+
+    By default, Request which already have a Response are skipped. To force
+    all the Request to be made, use `force=True`. 
+    
+    It is also possible to randomise the order in which the Requests are 
+    executed. To do so, use `randomised=True`.
+
+    A callback can be executed after each Request. It should be a function
+    that receive one argument, the current Request.
+
+    If `verbose` is `True`, all the Request and Response will be displayed
+    instead of a global indicator.
+
+  .. method:: summary()
+  
+    Provide a statistical summary based on response length and time.
 
   .. method:: cmp(i1, i2)
     

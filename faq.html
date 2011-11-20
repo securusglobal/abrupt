@@ -1,0 +1,208 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>FAQ &mdash; Abrupt v0.4 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Abrupt v0.4 documentation" href="index.html" />
+    <link rel="next" title="CheatSheet" href="cheatsheet.html" />
+    <link rel="prev" title="abrupt.conf - Configuration" href="configuration.html" /> 
+  </head>
+  <body>
+<pre class="header_logo">
+   _   _                  _   
+  /_\ | |__ _ _ _  _ _ __| |_ 
+ / _ \| '_ \ '_| || | '_ \  _|
+/_/ \_\_.__/_|  \_,_| .__/\__|
+                 0.4|_|       
+</pre>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cheatsheet.html" title="CheatSheet"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="configuration.html" title="abrupt.conf - Configuration"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Abrupt v0.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="faq">
+<h1>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="i-found-a-bug">
+<h2>I found a bug<a class="headerlink" href="#i-found-a-bug" title="Permalink to this headline">¶</a></h2>
+<p>Before reporting it, please make sure you&#8217;re using the version 2.7
+of Python. If so, please email <a class="reference external" href="mailto:tw&#37;&#52;&#48;securusglobal&#46;com">tw<span>&#64;</span>securusglobal<span>&#46;</span>com</a> with the details
+of the bugs. If you feel you can patch it yourself, pull requests on
+github are welcomed.</p>
+</div>
+<div class="section" id="can-i-script-abrupt">
+<h2>Can I script Abrupt?<a class="headerlink" href="#can-i-script-abrupt" title="Permalink to this headline">¶</a></h2>
+<p>If you would like to script Abrupt (which is really easy,
+since based on Python), you only need to import it. Once imported,
+you can load a previously saved session. For instance:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python2.7</span>
+
+<span class="kn">from</span> <span class="nn">abrupt.all</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">switch_session</span><span class="p">(</span><span class="s">&#39;my_test&#39;</span><span class="p">)</span>
+
+<span class="n">irs</span> <span class="o">=</span> <span class="n">inject</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s">&quot;param1&quot;</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="s">&quot;sqli&quot;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">irs</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="is-there-any-http-syntax-file-for-vim">
+<h2>Is there any HTTP syntax file for Vim?<a class="headerlink" href="#is-there-any-http-syntax-file-for-vim" title="Permalink to this headline">¶</a></h2>
+<p>Sure. On <a class="reference external" href="https://github.com/tweksteen/vim-http-syntax">https://github.com/tweksteen/vim-http-syntax</a>, grab
+<cite>http.vim</cite> and put it in your <cite>.vim/syntax/</cite> directory. Then add
+the following line to your <cite>.vimrc</cite>:</p>
+<div class="highlight-python"><pre>au BufNewFile,BufRead *.http setf http</pre>
+</div>
+</div>
+<div class="section" id="how-can-i-see-the-list-of-existing-sessions">
+<h2>How can I see the list of existing sessions?<a class="headerlink" href="#how-can-i-see-the-list-of-existing-sessions" title="Permalink to this headline">¶</a></h2>
+<p>If you are within Abrupt:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">lss</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Otherwise, you can use the <cite>-l</cite> command line option:</p>
+<div class="highlight-python"><pre>$ abrupt -l</pre>
+</div>
+</div>
+<div class="section" id="what-is-the-content-of-abrupt">
+<h2>What is the content of <tt class="docutils literal"><span class="pre">~/.abrupt</span></tt>?<a class="headerlink" href="#what-is-the-content-of-abrupt" title="Permalink to this headline">¶</a></h2>
+<p>Abrupt creates a sub-directory to store its configuration, the certificates used
+when connected via SSL and the sessions dumps. In this directory,
+you will find:</p>
+<blockquote>
+<div><ul class="simple">
+<li><tt class="docutils literal"><span class="pre">abrupt.conf</span></tt>, the default configuration.</li>
+<li><tt class="docutils literal"><span class="pre">archives/</span></tt>, archived Requests. See <a class="reference internal" href="session.html#session.archive" title="session.archive"><tt class="xref py py-meth docutils literal"><span class="pre">archive()</span></tt></a>.</li>
+<li><tt class="docutils literal"><span class="pre">certs/</span></tt>, the CA certificate and the generated ones.</li>
+<li><tt class="docutils literal"><span class="pre">sessions/</span></tt>, the sessions dump.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="how-can-i-set-up-an-upstream-proxy">
+<h2>How can I set up an upstream proxy?<a class="headerlink" href="#how-can-i-set-up-an-upstream-proxy" title="Permalink to this headline">¶</a></h2>
+<p>Simply set the configuration attribute <a class="reference internal" href="configuration.html#conf.Configuration.proxy" title="conf.Configuration.proxy"><tt class="xref py py-attr docutils literal"><span class="pre">proxy</span></tt></a> to
+your HTTP(S) proxy address:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">conf</span><span class="o">.</span><span class="n">proxy</span> <span class="o">=</span> <span class="s">&quot;http://127.0.0.1:8081&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="abrupt-does-not-respond-after-editing-a-request">
+<h2>Abrupt does not respond after editing a Request<a class="headerlink" href="#abrupt-does-not-respond-after-editing-a-request" title="Permalink to this headline">¶</a></h2>
+<p>Once you&#8217;ve edited your Request (with <a class="reference internal" href="http.html#http.Request.edit" title="http.Request.edit"><tt class="xref py py-meth docutils literal"><span class="pre">edit()</span></tt></a> or
+<a class="reference internal" href="http.html#http.Request.play" title="http.Request.play"><tt class="xref py py-meth docutils literal"><span class="pre">play()</span></tt></a>), Abrupt try to recreate a new one based on the
+file. If you have edited a POST request and changed the length of the body,
+the <cite>Content-Length</cite> header might not match the real length. Therefore, Abrupt
+can&#8217;t properly parse your new Request. To avoid that, simply delete the
+<cite>Content-Length</cite> header, Abrupt will append a new one if it cannot be found.</p>
+</div>
+<div class="section" id="i-m-confused-how-do-i-execute-a-request-requestset">
+<h2>I&#8217;m confused, how do I execute a Request/RequestSet?<a class="headerlink" href="#i-m-confused-how-do-i-execute-a-request-requestset" title="Permalink to this headline">¶</a></h2>
+<p>Simple call the __call__() method of your Request/RequestSet. In Python, this
+method is used when you append <cite>()</cite> to your object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">r</span>
+<span class="go">&lt;GET www.example.org /&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">response</span>
+<span class="go">&lt;200 1200&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="i-think-i-ve-just-lost-my-last-proxy-capture-what-can-i-do">
+<h2>I think I&#8217;ve just lost my last proxy capture, what can I do?<a class="headerlink" href="#i-think-i-ve-just-lost-my-last-proxy-capture-what-can-i-do" title="Permalink to this headline">¶</a></h2>
+<p>Abrupt keep track of every Request made in: <a class="reference internal" href="http.html#http.history" title="http.history"><tt class="xref py py-data docutils literal"><span class="pre">history</span></tt></a>. Try:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">history</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="i-m-tired-of-typing-print-all-the-time">
+<h2>I&#8217;m tired of typing &#8216;print&#8217; all the time<a class="headerlink" href="#i-m-tired-of-typing-print-all-the-time" title="Permalink to this headline">¶</a></h2>
+<p>Try:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="s">&quot;test&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="this-requestset-is-gigantic-how-can-i-have-a-better-overview-of-it">
+<h2>This RequestSet is gigantic! How can I have a better overview of it?<a class="headerlink" href="#this-requestset-is-gigantic-how-can-i-have-a-better-overview-of-it" title="Permalink to this headline">¶</a></h2>
+<p>There are few options to solve this issue. If you want, you could
+start a pager on the represenation of the RequestSet:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">less</span> <span class="n">rs</span>
+</pre></div>
+</div>
+<p>You could also filter the RequestSet:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">tiny_rs</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="s">&quot;500&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Or sort the RequestSet by length or by status:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rs</span><span class="o">.</span><span class="n">by_length</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Finally, you could use the experimental <a class="reference internal" href="http.html#http.RequestSet.summary" title="http.RequestSet.summary"><tt class="xref py py-meth docutils literal"><span class="pre">summary()</span></tt></a>
+method to have a quick statistical overview of the responses.</p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="cheatsheet.html" title="CheatSheet"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="configuration.html" title="abrupt.conf - Configuration"
+             >previous</a> |</li>
+        <li><a href="index.html">Abrupt v0.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Securus Global.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
