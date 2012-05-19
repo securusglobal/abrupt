@@ -6,13 +6,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Quick start &mdash; Abrupt v0.4 documentation</title>
+    <title>Quick start &mdash; Abrupt v0.5 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.4',
+        VERSION:     '0.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -21,7 +21,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Abrupt v0.4 documentation" href="#" />
+    <link rel="top" title="Abrupt v0.5 documentation" href="#" />
     <link rel="next" title="abrupt.http - HTTP base classes" href="http.html" /> 
   </head>
   <body>
@@ -30,7 +30,7 @@
   /_\ | |__ _ _ _  _ _ __| |_ 
  / _ \| '_ \ '_| || | '_ \  _|
 /_/ \_\_.__/_|  \_,_| .__/\__|
-                 0.4|_|       
+                    |_|       
 </pre>
 
     <div class="related">
@@ -45,7 +45,7 @@
         <li class="right" >
           <a href="http.html" title="abrupt.http - HTTP base classes"
              accesskey="N">next</a> |</li>
-        <li><a href="#">Abrupt v0.4 documentation</a> &raquo;</li> 
+        <li><a href="#">Abrupt v0.5 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -57,11 +57,12 @@
 BSD Licensed. Based on Python 2.7.</p>
 <div class="section" id="quick-start">
 <h1>Quick start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-python"><pre>$ sudo pip install abrupt
-$ abrupt
+<div class="highlight-python"><pre>$ git clone git://github.com/securusglobal/abrupt.git
+$ cd abrupt
+$ ./bin/abrupt
 Generating SSL certificate...
-CA certificate : /home/tweksteen/.abrupt/ca.pem
-Abrupt 0.4
+CA certificate : ~/.abrupt/ca.pem
+Abrupt 0.5
 &gt;&gt;&gt;</pre>
 </div>
 <div class="admonition note">
@@ -69,60 +70,69 @@ Abrupt 0.4
 <p class="last">The first time you start Abrupt, it will generate a CA certificate.
 This is useful to avoid the exception creation whenever you reach a HTTPS
 site with the proxy enabled. You can install this certificate in your
-browser. Currently, no check is performed by Abrupt on the server side
-regarding SSL.</p>
+browser.</p>
 </div>
-<p>If libxml is installed, Abrupt will uses it to improve accuracy of anomaly
-detection. This dependency is optional.</p>
+<p>Abrupt tries to make all day-to-day actions as fast as possible. Most of the
+core functions have an alias (first letter). It is possible to retrieve the
+list of aliases in the <a class="reference internal" href="cheatsheet.html"><em>cheatsheet</em></a>.</p>
 <div class="section" id="proxy">
 <h2>Proxy<a class="headerlink" href="#proxy" title="Permalink to this headline">¶</a></h2>
 <p>To start, let&#8217;s grab some HTTP requests. To do so, use the <a class="reference internal" href="proxy.html#proxy.proxy" title="proxy.proxy"><tt class="xref py py-func docutils literal"><span class="pre">proxy()</span></tt></a>
 function or its alias <cite>p</cite>. It will start a new proxy server on the port 8080.
-This server will catch every HTTP(S) request and prompt the user for
-directions:</p>
+This server will intercept every HTTP(S) request and prompt for directions:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="p">()</span>
 <span class="go">Running on port 8080</span>
 <span class="go">Ctrl-C to interrupt the proxy...</span>
 </pre></div>
 </div>
 <p>You can now configure your browser to use <a class="reference external" href="http://localhost:8080">http://localhost:8080</a> as your proxy.
-All the requests will be captured by Abrupt:</p>
-<div class="highlight-python"><pre>&lt;GET www.phrack.org /&gt; ?</pre>
+All the requests will be captured by Abrupt and displayed:</p>
+<div class="highlight-python"><pre>[1] &lt;GET www.phrack.org /&gt; ?</pre>
 </div>
-<p>For each request, you can decide what to do:</p>
+<p>In this case, a GET request targeted at www.phrack.org arrived. (The number
+at the beggining of each line represents the thread which is processing the
+request). You can now decide what to do:</p>
 <blockquote>
 <div><ul class="simple">
 <li>(v)iew - print the full request</li>
+<li>(h)eaders - print the headers</li>
 <li>(e)dit - manually edit the request in your text editor</li>
 <li>(d)rop - drop the request</li>
 <li>(f)orward - forward the request</li>
 <li>(c)ontinue - forward this request and the followings</li>
+<li>(n)ext - put this request on the side and process another one</li>
 </ul>
 </div></blockquote>
 <p>Forward is the default action if none is passed. Once a request has been made,
-you can see the response status and length:</p>
-<div class="highlight-python"><pre>&lt;GET www.phrack.org /&gt; ? f
-&lt;200 Gzip 5419&gt;</pre>
+you can see the response:</p>
+<div class="highlight-python"><pre>[1] &lt;GET www.phrack.org /&gt; ? f
+[1] &lt;200 7468 text/html gzip&gt;</pre>
 </div>
-<p>Once you&#8217;re done with your requests, use Ctrl-C to exit. The proxy function
-returns all the completed requests and associated responses in a
+<p>The response status, length, content-type and flag are displayed. Once you&#8217;re
+done with your requests, use Ctrl-C to exit. The proxy function returns all
+the completed requests and associated responses in a
 <a class="reference internal" href="http.html#http.RequestSet" title="http.RequestSet"><tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt></a> object:</p>
-<div class="highlight-python"><pre>1 request intercepted
+<div class="highlight-python"><pre>Waiting for the threads to stop
 {200:1 | www.phrack.org}
 &gt;&gt;&gt; requests = _
 &gt;&gt;&gt; print requests
 Method Path Query Status Length
-GET    /          200    5419
+GET    /          200    7468
 
 &gt;&gt;&gt; requests[0]
 &lt;GET www.phrack.org /&gt;</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Inside the Python interpreter, the underscore variable (&#8220;_&#8221;) holds
+the result of the previous command.</p>
 </div>
 <p>The proxy comes with a powerful rules system to automatically process some
 requests according to user-defined criteria. For instance:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="p">(</span><span class="n">rules</span><span class="o">=</span><span class="p">((</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">hostname</span> <span class="o">!=</span> <span class="s">&quot;www.phrack.org&quot;</span><span class="p">,</span> <span class="s">&quot;d&quot;</span><span class="p">),)</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p>will automatically drop any request which is not targeting &#8220;www.phrack.org&#8221;.
+<p>will automatically drop any request which is not targeting www.phrack.org.
 If no rule is provided, it will forward image files (.png, .jpg, .jpeg,
 .ico, .gif) without prompting the user. To see these images, you can increase
 the verbosity level:</p>
@@ -133,7 +143,8 @@ the verbosity level:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="p">(</span><span class="n">rules</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>To learn more about rules and how to make your own, see <a class="reference internal" href="proxy.html#proxy.proxy" title="proxy.proxy"><tt class="xref py py-func docutils literal"><span class="pre">proxy()</span></tt></a>.</p>
+<p>To learn more about rules, how to make your own and how to configure the
+proxy, see <a class="reference internal" href="proxy.html#proxy.proxy" title="proxy.proxy"><tt class="xref py py-func docutils literal"><span class="pre">proxy()</span></tt></a>.</p>
 </div>
 <div class="section" id="request-and-response">
 <h2>Request and Response<a class="headerlink" href="#request-and-response" title="Permalink to this headline">¶</a></h2>
@@ -157,15 +168,14 @@ editor (default is vim) to create a new request:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">new_r</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">edit</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>For interactive edition, see the <a class="reference internal" href="http.html#http.Request.play" title="http.Request.play"><tt class="xref py py-meth docutils literal"><span class="pre">play()</span></tt></a> method. <em>Amusement
-garanti!</em></p>
-<p>The request can be executed and the response displayed:</p>
+<p>The request can then be executed and the new response displayed:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">new_r</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">new_r</span><span class="o">.</span><span class="n">response</span>
-<span class="go">&lt;200 Gzip 5419&gt;</span>
+<span class="go">&lt;200 7468 text/html gzip&gt;</span>
 </pre></div>
 </div>
-<p><a class="reference internal" href="http.html#http.Response" title="http.Response"><tt class="xref py py-class docutils literal"><span class="pre">Response</span></tt></a> objects have the attributes: status, reason, headers,
+<p>For interactive edition, see the <a class="reference internal" href="http.html#http.Request.play" title="http.Request.play"><tt class="xref py py-meth docutils literal"><span class="pre">play()</span></tt></a> method.
+<a class="reference internal" href="http.html#http.Response" title="http.Response"><tt class="xref py py-class docutils literal"><span class="pre">Response</span></tt></a> objects have the attributes: status, reason, headers,
 content, raw_content, etc. You can use the <a class="reference internal" href="http.html#http.Response.preview" title="http.Response.preview"><tt class="xref py py-meth docutils literal"><span class="pre">preview()</span></tt></a>
 method to open a static dump of the response in your browser and the
 <a class="reference internal" href="http.html#http.Response.view" title="http.Response.view"><tt class="xref py py-meth docutils literal"><span class="pre">view()</span></tt></a> method to view the source in your text editor.</p>
@@ -191,9 +201,9 @@ from the <a class="reference internal" href="proxy.html#proxy.proxy" title="prox
 capture session:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="p">()</span>
 <span class="go">Ctrl-C to interrupt the proxy...</span>
-<span class="go">&lt;GET www.cryptome.org /&gt;</span>
-<span class="go">&lt;200 49380&gt;</span>
-<span class="go">1 request intercepted</span>
+<span class="go">&lt;GET www.cryptome.org /&gt; ? f</span>
+<span class="go">&lt;200 64184 text/html&gt; ? f</span>
+<span class="go">Waiting for the threads to stop</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">requests</span> <span class="o">+=</span> <span class="n">_</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">requests</span>
 <span class="go">{200:2 | phrack.org, www.cryptome.org}</span>
@@ -227,7 +237,7 @@ possible values for the payload list name are the keys of the
 <a class="reference internal" href="injection.html#injection.payloads" title="injection.payloads"><tt class="xref py py-data docutils literal"><span class="pre">payloads</span></tt></a> global dictionary, and Abrupt comes with some
 default ones:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">payloads</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
-<span class="go">[&#39;digits&#39;, &#39;lowercase&#39;, &#39;full&#39;, &#39;default&#39;, &#39;uppercase&#39;, &#39;sqli&#39;, &#39;hexdigits&#39;, &#39;printable&#39;]</span>
+<span class="go">[&#39;xss&#39;, &#39;sqli&#39;, &#39;default&#39;, &#39;cmd&#39;, &#39;misc&#39;, &#39;printable&#39;, &#39;email&#39;, &#39;dir&#39;]</span>
 </pre></div>
 </div>
 <p>You can add your own payload list to your Abrupt or also use a list generated
@@ -263,12 +273,14 @@ of Abrupt. To discover more about it, just follow one of these links:</p>
 <li class="toctree-l1"><a class="reference internal" href="configuration.html">abrupt.conf - Configuration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="faq.html#i-found-a-bug">I found a bug</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#what-are-the-requirements-for-running-abrupt">What are the requirements for running Abrupt?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faq.html#can-i-script-abrupt">Can I script Abrupt?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faq.html#is-there-any-http-syntax-file-for-vim">Is there any HTTP syntax file for Vim?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faq.html#how-can-i-see-the-list-of-existing-sessions">How can I see the list of existing sessions?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faq.html#what-is-the-content-of-abrupt">What is the content of <tt class="docutils literal"><span class="pre">~/.abrupt</span></tt>?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faq.html#how-can-i-set-up-an-upstream-proxy">How can I set up an upstream proxy?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faq.html#abrupt-does-not-respond-after-editing-a-request">Abrupt does not respond after editing a Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="faq.html#i-got-ssl-errors-like-errno-1-ssl-c-499-error-ssl3-read-bytes-tlsv1-alert-unknown-ca">I got SSL errors like <tt class="docutils literal"><span class="pre">[Errno</span> <span class="pre">1]</span> <span class="pre">_ssl.c:499:</span> <span class="pre">error::SSL3_READ_BYTES:tlsv1</span> <span class="pre">alert</span> <span class="pre">unknown</span> <span class="pre">ca</span></tt></a></li>
 <li class="toctree-l2"><a class="reference internal" href="faq.html#i-m-confused-how-do-i-execute-a-request-requestset">I&#8217;m confused, how do I execute a Request/RequestSet?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faq.html#i-think-i-ve-just-lost-my-last-proxy-capture-what-can-i-do">I think I&#8217;ve just lost my last proxy capture, what can I do?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="faq.html#i-m-tired-of-typing-print-all-the-time">I&#8217;m tired of typing &#8216;print&#8217; all the time</a></li>
@@ -308,12 +320,12 @@ of Abrupt. To discover more about it, just follow one of these links:</p>
         <li class="right" >
           <a href="http.html" title="abrupt.http - HTTP base classes"
              >next</a> |</li>
-        <li><a href="#">Abrupt v0.4 documentation</a> &raquo;</li> 
+        <li><a href="#">Abrupt v0.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Securus Global.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2012, Securus Global.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.8.
     </div>
   </body>
 </html>

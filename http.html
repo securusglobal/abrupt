@@ -6,13 +6,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>abrupt.http - HTTP base classes &mdash; Abrupt v0.4 documentation</title>
+    <title>abrupt.http - HTTP base classes &mdash; Abrupt v0.5 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0.4',
+        VERSION:     '0.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -21,7 +21,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Abrupt v0.4 documentation" href="index.html" />
+    <link rel="top" title="Abrupt v0.5 documentation" href="index.html" />
     <link rel="next" title="abrupt.proxy - HTTP(S) Proxy" href="proxy.html" />
     <link rel="prev" title="Quick start" href="index.html" /> 
   </head>
@@ -31,7 +31,7 @@
   /_\ | |__ _ _ _  _ _ __| |_ 
  / _ \| '_ \ '_| || | '_ \  _|
 /_/ \_\_.__/_|  \_,_| .__/\__|
-                 0.4|_|       
+                    |_|       
 </pre>
 
     <div class="related">
@@ -49,7 +49,7 @@
         <li class="right" >
           <a href="index.html" title="Quick start"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">Abrupt v0.4 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Abrupt v0.5 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -147,11 +147,29 @@ For more information, see <a class="reference internal" href="#http.Response" ti
 </dd></dl>
 
 <dl class="method">
+<dt id="http.Request.has_header">
+<tt class="descname">has_header</tt><big>(</big><em>name</em>, <em>value=None</em><big>)</big><a class="headerlink" href="#http.Request.has_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the request contained a specific headers (case insensitive).
+If value is supplied, it is matched (case insensitive) against the first
+header with the matching name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="http.Request.get_header">
+<tt class="descname">get_header</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#http.Request.get_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the headers of the request matching name (case insensitive). Note
+that this method always returns a list.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="http.Request.__call__">
-<tt class="descname">__call__</tt><big>(</big><big>)</big><a class="headerlink" href="#http.Request.__call__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__call__</tt><big>(</big><em>conn=None</em>, <em>chunk_callback=None</em><big>)</big><a class="headerlink" href="#http.Request.__call__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Do the request. Includes connect to the server, send the request,
 read the response, create the corresponding <a class="reference internal" href="#http.Response" title="http.Response"><tt class="xref py py-class docutils literal"><span class="pre">Response</span></tt></a>
-object and add itself to the <a class="reference internal" href="#http.history" title="http.history"><tt class="xref py py-data docutils literal"><span class="pre">history</span></tt></a>.</p>
+object and add itself to the <a class="reference internal" href="#http.history" title="http.history"><tt class="xref py py-data docutils literal"><span class="pre">history</span></tt></a>.
+If <cite>conn</cite> is supplied, it will be used as connection socket. If
+<cite>chunk_callback</cite> is supplied, it will be call for every chunk received,
+if applicable.</p>
 </dd></dl>
 
 <dl class="method">
@@ -177,20 +195,20 @@ See the configuration parameter <a class="reference internal" href="configuratio
 <p class="first admonition-title">Note</p>
 <p class="last">When editing a Request, you might change the content of a POST
 request. To be valid, the <cite>Content-Length</cite> header should be adapted to
-the new content length. Abrupt will automatically append the correct
-header if none is found. In other word, when editing a POST request,
-simply remove the <cite>Content-Length</cite> header and Abrupt will do the rest.</p>
+the new content length. By default, Abrupt will automatically remove
+any <cite>Content-Length</cite> header before editing a Request and append a
+valid one once the Request has been saved. To disable this option,
+see <cite>conf.Configuration.update_content_length</cite>.</p>
 </div>
 </dd></dl>
 
 <dl class="method">
 <dt id="http.Request.play">
-<tt class="descname">play</tt><big>(</big><em>options</em><big>)</big><a class="headerlink" href="#http.Request.play" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">play</tt><big>(</big><big>)</big><a class="headerlink" href="#http.Request.play" title="Permalink to this definition">¶</a></dt>
 <dd><p>Start your editor with two windows. Each time the request file is saved,
 the request is made to the server and the response updated. When the
-editor terminates, the last valid request made is returned.
-By default, <cite>options</cite> is set to configure <tt class="docutils literal"><span class="pre">vim</span></tt>.</p>
-<p>Please read the above note about Content-Length.</p>
+editor terminates, the last valid request made is returned.</p>
+<p>Please read the above note about <cite>Content-Length</cite>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -244,10 +262,37 @@ the Request attribute <a class="reference internal" href="#http.Request.response
 </dd></dl>
 
 <dl class="attribute">
+<dt id="http.Response.length">
+<tt class="descname">length</tt><a class="headerlink" href="#http.Response.length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Length of the response content.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="http.Response.content_type">
+<tt class="descname">content_type</tt><a class="headerlink" href="#http.Response.content_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>Content type of the response, according to the headers.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="http.Response.cookies">
 <tt class="descname">cookies</tt><a class="headerlink" href="#http.Response.cookies" title="Permalink to this definition">¶</a></dt>
 <dd><p>A python cookie, see <a class="reference external" href="http://docs.python.org/library/cookie.html">http://docs.python.org/library/cookie.html</a>. This
 attribute is read-only, based on the <a class="reference internal" href="#http.Response.headers" title="http.Response.headers"><tt class="xref py py-attr docutils literal"><span class="pre">headers</span></tt></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="http.Response.has_header">
+<tt class="descname">has_header</tt><big>(</big><em>name</em>, <em>value=None</em><big>)</big><a class="headerlink" href="#http.Response.has_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test if the response contained a specific headers (case insensitive).
+If value is supplied, it is matched (case insensitive) against the first
+header with the matching name.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="http.Response.get_header">
+<tt class="descname">get_header</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#http.Response.get_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the headers of the response matching name (case insensitive). Note
+that this method always returns a list.</p>
 </dd></dl>
 
 <dl class="method">
@@ -280,7 +325,7 @@ attribute is read-only, based on the <a class="reference internal" href="#http.R
 <dt id="http.RequestSet">
 <em class="property">class </em><tt class="descclassname">http.</tt><tt class="descname">RequestSet</tt><big>(</big><span class="optional">[</span><em>reqs=None</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#http.RequestSet" title="Permalink to this definition">¶</a></dt>
 <dd><p>RequestSet is just an easy way to group some <a class="reference internal" href="#http.Request" title="http.Request"><tt class="xref py py-class docutils literal"><span class="pre">Request</span></tt></a>. It
-behave like a list. You can access element at a specific index
+behaves like a list. You can access element at a specific index
 with the <cite>[]</cite> operator. <cite>append</cite>, <cite>extend</cite>, <cite>pop</cite>, <cite>+</cite> will behave as
 expected.</p>
 <dl class="method">
@@ -306,7 +351,7 @@ up, set <cite>from_response</cite> to <cite>True</cite>.</p>
 
 <dl class="method">
 <dt id="http.RequestSet.__call__">
-<tt class="descname">__call__</tt><big>(</big><span class="optional">[</span><em>force=False</em>, <em>randomised=False</em>, <em>post_call=None</em>, <em>verbose=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#http.RequestSet.__call__" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">__call__</tt><big>(</big><span class="optional">[</span><em>force=False</em>, <em>randomised=False</em>, <em>post_callback=None</em>, <em>verbose=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#http.RequestSet.__call__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Send all the requests contained in the RequestSet. This call is only
 valid if the requests are all using the same host and port.
 An exception is raised if it is not the case.</p>
@@ -323,7 +368,7 @@ instead of a global indicator.</p>
 <dl class="method">
 <dt id="http.RequestSet.summary">
 <tt class="descname">summary</tt><big>(</big><big>)</big><a class="headerlink" href="#http.RequestSet.summary" title="Permalink to this definition">¶</a></dt>
-<dd><p>Provide a statistical summary based on response length and time.</p>
+<dd><p>Provide a statistical summary based on responses length and time.</p>
 </dd></dl>
 
 <dl class="method">
@@ -389,12 +434,12 @@ Abrupt. To turn it off, set <a class="reference internal" href="configuration.ht
         <li class="right" >
           <a href="index.html" title="Quick start"
              >previous</a> |</li>
-        <li><a href="index.html">Abrupt v0.4 documentation</a> &raquo;</li> 
+        <li><a href="index.html">Abrupt v0.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Securus Global.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2012, Securus Global.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.8.
     </div>
   </body>
 </html>
