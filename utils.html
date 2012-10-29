@@ -1,0 +1,145 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>abrupt.utils - Miscellaneous functions &mdash; Abrupt 0.5 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Abrupt 0.5 documentation" href="index.html" />
+    <link rel="next" title="FAQ" href="faq.html" />
+    <link rel="prev" title="abrupt.conf - Configuration" href="configuration.html" /> 
+  </head>
+  <body>
+<pre class="header_logo">
+   _   _                  _   
+  /_\ | |__ _ _ _  _ _ __| |_ 
+ / _ \| '_ \ '_| || | '_ \  _|
+/_/ \_\_.__/_|  \_,_| .__/\__|
+                    |_|       
+</pre>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="faq.html" title="FAQ"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="configuration.html" title="abrupt.conf - Configuration"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Abrupt 0.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="abrupt-utils-miscellaneous-functions">
+<h1>abrupt.utils - Miscellaneous functions<a class="headerlink" href="#abrupt-utils-miscellaneous-functions" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="idle">
+<tt class="descname">idle</tt><big>(</big><em>request</em>, <em>delay=60</em>, <em>predicate=None</em>, <em>verbose=False</em><big>)</big><a class="headerlink" href="#idle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call a request on regular interval until a condition is reached.
+The predicate parameter should be a function which takes two
+requests (old, new) and returns a boolean if the idle should terminate.
+If not supplied, the predicate will validate that the response status
+code remains the same.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pxml">
+<tt class="descname">pxml</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#pxml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pretty-print XML.
+If x is a request or a response, its content is pretty-printed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pjson">
+<tt class="descname">pjson</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#pjson" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pretty-print JSON.
+If x is a request or a response, its content is pretty-printed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="e64">
+<tt class="descname">e64</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#e64" title="Permalink to this definition">¶</a></dt>
+<dd><p>base 64 encode</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="d64">
+<tt class="descname">d64</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#d64" title="Permalink to this definition">¶</a></dt>
+<dd><p>base 64 decode</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="encode">
+<tt class="descname">encode</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#encode" title="Permalink to this definition">¶</a></dt>
+<dd><p>aliased <cite>e</cite></p>
+<p>urlquote(x)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="decode">
+<tt class="descname">decode</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#decode" title="Permalink to this definition">¶</a></dt>
+<dd><p>aliased <cite>d</cite></p>
+<p>urlunquote(x)</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="faq.html" title="FAQ"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="configuration.html" title="abrupt.conf - Configuration"
+             >previous</a> |</li>
+        <li><a href="index.html">Abrupt 0.5 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Securus Global.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

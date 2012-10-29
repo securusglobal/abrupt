@@ -26,7 +26,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Abrupt 0.5 documentation" href="index.html" />
     <link rel="next" title="CheatSheet" href="cheatsheet.html" />
-    <link rel="prev" title="abrupt.conf - Configuration" href="configuration.html" /> 
+    <link rel="prev" title="abrupt.utils - Miscellaneous functions" href="utils.html" /> 
   </head>
   <body>
 <pre class="header_logo">
@@ -50,7 +50,7 @@
           <a href="cheatsheet.html" title="CheatSheet"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="configuration.html" title="abrupt.conf - Configuration"
+          <a href="utils.html" title="abrupt.utils - Miscellaneous functions"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">Abrupt 0.5 documentation</a> &raquo;</li> 
       </ul>
@@ -147,6 +147,14 @@ proxy. You could add an exception within it which will bypass this error.
 Other common errors could be the lost of connection during the certificate
 exchange or incompatible SSL version.</p>
 </div>
+<div class="section" id="while-trying-to-inject-a-request-i-have-the-error-typeerror-int-object-is-not-callable">
+<h2>While trying to inject a request, I have the error <tt class="docutils literal"><span class="pre">TypeError:</span> <span class="pre">'int'</span> <span class="pre">object</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">callable</span></tt><a class="headerlink" href="#while-trying-to-inject-a-request-i-have-the-error-typeerror-int-object-is-not-callable" title="Permalink to this headline">¶</a></h2>
+<p>There is a chance that you overwrite the alias <tt class="docutils literal"><span class="pre">i</span></tt> with an integer. To recreate the
+alias, try:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">i</span> <span class="o">=</span> <span class="n">inject</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="i-m-confused-how-do-i-execute-a-request-requestset">
 <h2>I&#8217;m confused, how do I execute a Request/RequestSet?<a class="headerlink" href="#i-m-confused-how-do-i-execute-a-request-requestset" title="Permalink to this headline">¶</a></h2>
 <p>Simple call the __call__() method of your Request/RequestSet. In Python, this
@@ -177,7 +185,7 @@ method is used when you append <cite>()</cite> to your object:</p>
 <h2>This RequestSet is gigantic! How can I have a better overview of it?<a class="headerlink" href="#this-requestset-is-gigantic-how-can-i-have-a-better-overview-of-it" title="Permalink to this headline">¶</a></h2>
 <p>There are few options to solve this issue. If you want, you could
 start a pager on the represenation of the RequestSet:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">less</span> <span class="n">rs</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">view</span> <span class="n">rs</span>
 </pre></div>
 </div>
 <p>You could also filter the RequestSet:</p>
@@ -211,7 +219,7 @@ method to have a quick statistical overview of the responses.</p>
           <a href="cheatsheet.html" title="CheatSheet"
              >next</a> |</li>
         <li class="right" >
-          <a href="configuration.html" title="abrupt.conf - Configuration"
+          <a href="utils.html" title="abrupt.utils - Miscellaneous functions"
              >previous</a> |</li>
         <li><a href="index.html">Abrupt 0.5 documentation</a> &raquo;</li> 
       </ul>

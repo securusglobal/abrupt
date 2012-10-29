@@ -78,6 +78,8 @@ valid injection point is found, an error is raised.</p>
 whole request text and replace it with the payloads. If no valid injection
 point is found, an error is raised. If the string is found more than
 once, the function will suggest to provide the &#8216;choice&#8217; integer keyword.</p>
+<p>In both case, the <cite>to</cite> or <cite>at</cite> parameter can be a list. The same logic
+described above will then be applied for each element of that list.</p>
 <p><cite>payload</cite> could either be a list of the payloads to inject or a key
 of the global dictionary <a class="reference internal" href="#injection.payloads" title="injection.payloads"><tt class="xref py py-data docutils literal"><span class="pre">payloads</span></tt></a>.</p>
 <p>Some examples:</p>
@@ -87,7 +89,7 @@ of the global dictionary <a class="reference internal" href="#injection.payloads
 <span class="go">Cookie: PHPSESSID=4592a21fc9fd6b1e0afcc931eb74b28a</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">i</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s">&quot;id&quot;</span><span class="p">)</span>
-<span class="go">{unknown:9 | www.phrack.com}</span>
+<span class="go">{unknown:188 | www.phrack.com}</span>
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">i</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="s">&quot;PHPSESSID&quot;</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;1234&quot;</span><span class="p">,</span><span class="s">&quot;0000&quot;</span><span class="p">,</span><span class="s">&quot;31337-abcd&quot;</span><span class="p">])</span>
 <span class="go">{unknown:3 | www.phrack.com}</span>
@@ -97,10 +99,27 @@ of the global dictionary <a class="reference internal" href="#injection.payloads
 
 <span class="gp">&gt;&gt;&gt; </span><span class="n">i</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">at</span><span class="o">=</span><span class="s">&quot;4592a21fc9fd6b1e0afcc931eb74b28a&quot;</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="s">&quot;sqli&quot;</span><span class="p">)</span>
 <span class="go">{unknown:106 | www.phrack.com}</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="p">[</span><span class="s">&quot;issue&quot;</span><span class="p">,</span> <span class="s">&quot;id&quot;</span><span class="p">])</span>
+<span class="go">{unknown:376 | www.phrack.com}</span>
 </pre></div>
 </div>
 <p>The <cite>pre_func</cite> parameter is a function to apply to each payload before
-being injected. By default, it urlencode the payload.</p>
+being injected. By default, it urlencodes the payload.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="injection.find_injection_point">
+<tt class="descclassname">injection.</tt><tt class="descname">find_injection_point</tt><big>(</big><em>request</em><big>)</big><a class="headerlink" href="#injection.find_injection_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias <cite>fip</cite></p>
+<p>This function returns a list of all the injection point found by Abrupt.
+It can be used to inject only on a subset of them:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fip</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<span class="go">[&#39;issue&#39;, &#39;id&#39;, &#39;PHPSESSID&#39;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">i</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">to</span><span class="o">=</span><span class="n">fip</span><span class="p">(</span><span class="n">r</span><span class="p">)[:</span><span class="mi">2</span><span class="p">])</span>
+<span class="go">{unknown:212 | www.phrack.com}</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="data">
@@ -119,20 +138,6 @@ string. When started, Abrupt load all the files under the directory
 </ul>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="injection.encode">
-<tt class="descclassname">injection.</tt><tt class="descname">encode</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#injection.encode" title="Permalink to this definition">¶</a></dt>
-<dd><p>aliased <cite>e</cite></p>
-<p>urlquote(x)</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="injection.decode">
-<tt class="descclassname">injection.</tt><tt class="descname">decode</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#injection.decode" title="Permalink to this definition">¶</a></dt>
-<dd><p>aliased <cite>d</cite></p>
-<p>urlunquote(x)</p>
 </dd></dl>
 
 </div>

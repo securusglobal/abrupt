@@ -25,7 +25,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="Abrupt 0.5 documentation" href="index.html" />
-    <link rel="next" title="FAQ" href="faq.html" />
+    <link rel="next" title="abrupt.utils - Miscellaneous functions" href="utils.html" />
     <link rel="prev" title="abrupt.session - Session handler" href="session.html" /> 
   </head>
   <body>
@@ -47,7 +47,7 @@
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="faq.html" title="FAQ"
+          <a href="utils.html" title="abrupt.utils - Miscellaneous functions"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="session.html" title="abrupt.session - Session handler"
@@ -71,14 +71,61 @@ the <a class="reference internal" href="#conf.conf" title="conf.conf"><tt class=
 <dt id="conf.Configuration.save">
 <tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#conf.Configuration.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the current configuration. This method should only be called
-outside a session. Inside a session, simply call <a class="reference internal" href="session.html#session.save" title="session.save"><tt class="xref py py-func docutils literal"><span class="pre">session.save()</span></tt></a>.</p>
+within the default session. Otherwise, simply call <a class="reference internal" href="session.html#session.save" title="session.save"><tt class="xref py py-func docutils literal"><span class="pre">session.save()</span></tt></a>.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="conf.Configuration.proxy">
-<tt class="descname">proxy</tt><a class="headerlink" href="#conf.Configuration.proxy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Upstream proxy. Abrupt supports HTTP(S), Socks4a and Socks5 proxys, without
-authentication. By default, None.</p>
+<dt id="conf.Configuration.autosave">
+<tt class="descname">autosave</tt><a class="headerlink" href="#conf.Configuration.autosave" title="Permalink to this definition">¶</a></dt>
+<dd><p>Autosave the session when terminating Abrupt or switching to a
+new one. By default, True.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="conf.Configuration.color_enabled">
+<tt class="descname">color_enabled</tt><a class="headerlink" href="#conf.Configuration.color_enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Boolean to activate or deactivate the colors in the console.
+By default, True.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="conf.Configuration.delay">
+<tt class="descname">delay</tt><a class="headerlink" href="#conf.Configuration.delay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delay between requests when a <a class="reference internal" href="http.html#http.RequestSet" title="http.RequestSet"><tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt></a> is executed.
+By default, 0.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="conf.Configuration.diff_editor">
+<tt class="descname">diff_editor</tt><a class="headerlink" href="#conf.Configuration.diff_editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default editor to use when comparing requests or responses.
+By default, <tt class="docutils literal"><span class="pre">/usr/bin/vimdiff</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="conf.Configuration.editor">
+<tt class="descname">editor</tt><a class="headerlink" href="#conf.Configuration.editor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default editor to use when editing a request or viewing a response.
+By default, <tt class="docutils literal"><span class="pre">/usr/bin/vim</span></tt>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="conf.Configuration.editor_args">
+<tt class="descname">editor_args</tt><a class="headerlink" href="#conf.Configuration.editor_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arguments for your editor when using the <a class="reference internal" href="http.html#http.Request.edit" title="http.Request.edit"><tt class="xref py py-meth docutils literal"><span class="pre">edit()</span></tt></a> method.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="conf.Configuration.editor_play_args">
+<tt class="descname">editor_play_args</tt><a class="headerlink" href="#conf.Configuration.editor_play_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extra arguments when using the <a class="reference internal" href="http.html#http.Request.play" title="http.Request.play"><tt class="xref py py-meth docutils literal"><span class="pre">play()</span></tt></a> method.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="conf.Configuration.history">
+<tt class="descname">history</tt><a class="headerlink" href="#conf.Configuration.history" title="Permalink to this definition">¶</a></dt>
+<dd><p>Keep a copy of all the requests made in the global <tt class="xref py py-mod docutils literal"><span class="pre">history</span></tt>.
+By default, True.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -96,26 +143,10 @@ function. By default, 8080.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="conf.Configuration.target">
-<tt class="descname">target</tt><a class="headerlink" href="#conf.Configuration.target" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set a target in case of transparent proxying. If your application is not
-proxy-aware, use this parameter to set a target. By default, None.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="conf.Configuration.ssl_verify">
-<tt class="descname">ssl_verify</tt><a class="headerlink" href="#conf.Configuration.ssl_verify" title="Permalink to this definition">¶</a></dt>
-<dd><p>Path to the CA chain. If None, no verification or validation is made
-on the server SSL certificate. By default, /etc/pki/tls/cert.pem.
-Under Ubuntu/Debian, you may use /etc/ssl/certs/ca-certificates.crt.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="conf.Configuration.ssl_reverse">
-<tt class="descname">ssl_reverse</tt><a class="headerlink" href="#conf.Configuration.ssl_reverse" title="Permalink to this definition">¶</a></dt>
-<dd><p>If True, the proxy will use the SSL hostname gathered by contacting the target server.
-The server certificate will be validated before being used. Therefore, <a class="reference internal" href="#conf.Configuration.ssl_verify" title="conf.Configuration.ssl_verify"><tt class="xref py py-attr docutils literal"><span class="pre">ssl_verify</span></tt></a>
-should be properly configured.</p>
+<dt id="conf.Configuration.proxy">
+<tt class="descname">proxy</tt><a class="headerlink" href="#conf.Configuration.proxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upstream proxy. Abrupt supports HTTP(S), Socks4a and Socks5 proxys, without
+authentication. By default, None.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -126,24 +157,20 @@ hostname of the SSL certificate through this attribute.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="conf.Configuration.delay">
-<tt class="descname">delay</tt><a class="headerlink" href="#conf.Configuration.delay" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delay between requests when a <a class="reference internal" href="http.html#http.RequestSet" title="http.RequestSet"><tt class="xref py py-class docutils literal"><span class="pre">RequestSet</span></tt></a> is executed.
-By default, 0.</p>
+<dt id="conf.Configuration.ssl_reverse">
+<tt class="descname">ssl_reverse</tt><a class="headerlink" href="#conf.Configuration.ssl_reverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>If True, the proxy will use the SSL hostname gathered by contacting the
+target server. The server certificate will be validated before being used.
+Therefore, <a class="reference internal" href="#conf.Configuration.ssl_verify" title="conf.Configuration.ssl_verify"><tt class="xref py py-attr docutils literal"><span class="pre">ssl_verify</span></tt></a> should be properly
+configured.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="conf.Configuration.autosave">
-<tt class="descname">autosave</tt><a class="headerlink" href="#conf.Configuration.autosave" title="Permalink to this definition">¶</a></dt>
-<dd><p>Autosave the session when terminating Abrupt or switching to a
-new one. By default, True.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="conf.Configuration.history">
-<tt class="descname">history</tt><a class="headerlink" href="#conf.Configuration.history" title="Permalink to this definition">¶</a></dt>
-<dd><p>Keep a copy of all the requests made in the global <tt class="xref py py-mod docutils literal"><span class="pre">history</span></tt>.
-By default, True.</p>
+<dt id="conf.Configuration.ssl_verify">
+<tt class="descname">ssl_verify</tt><a class="headerlink" href="#conf.Configuration.ssl_verify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Path to the CA chain. If empty, no verification or validation is made
+on the server SSL certificate. By default, /etc/pki/tls/cert.pem.
+Under Ubuntu/Debian, you may use /etc/ssl/certs/ca-certificates.crt.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -154,6 +181,13 @@ are: SSLv2, SSLv3, TLSv1 and SSLv23.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="conf.Configuration.target">
+<tt class="descname">target</tt><a class="headerlink" href="#conf.Configuration.target" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a target in case of transparent proxying. If your application is not
+proxy-aware, use this parameter to set a target. By default, None.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="conf.Configuration.term_width">
 <tt class="descname">term_width</tt><a class="headerlink" href="#conf.Configuration.term_width" title="Permalink to this definition">¶</a></dt>
 <dd><p>Expected width of the terminal. Abrupt tries to optimise the output
@@ -161,39 +195,6 @@ whenever possible in regards to the current terminal width. The
 default &#8220;auto&#8221; will try to get this information from the system. You
 can set any arbitrary integer. The value 0 will consider the width
 as unlimited.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="conf.Configuration.color_enabled">
-<tt class="descname">color_enabled</tt><a class="headerlink" href="#conf.Configuration.color_enabled" title="Permalink to this definition">¶</a></dt>
-<dd><p>Boolean to activate or deactivate the colors in the console.
-By default, True.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="conf.Configuration.editor">
-<tt class="descname">editor</tt><a class="headerlink" href="#conf.Configuration.editor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Default editor to use when editing a request or viewing a response.
-By default, <tt class="docutils literal"><span class="pre">/usr/bin/vim</span></tt>.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="conf.Configuration.diff_editor">
-<tt class="descname">diff_editor</tt><a class="headerlink" href="#conf.Configuration.diff_editor" title="Permalink to this definition">¶</a></dt>
-<dd><p>Default editor to use when comparing requests or responses.
-By default, <tt class="docutils literal"><span class="pre">/usr/bin/vimdiff</span></tt>.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="conf.Configuration.editor_args">
-<tt class="descname">editor_args</tt><a class="headerlink" href="#conf.Configuration.editor_args" title="Permalink to this definition">¶</a></dt>
-<dd><p>Arguments for your editor when using the <a class="reference internal" href="http.html#http.Request.edit" title="http.Request.edit"><tt class="xref py py-meth docutils literal"><span class="pre">edit()</span></tt></a> method.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="conf.Configuration.editor_play_args">
-<tt class="descname">editor_play_args</tt><a class="headerlink" href="#conf.Configuration.editor_play_args" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extra arguments when using the <a class="reference internal" href="http.html#http.Request.play" title="http.Request.play"><tt class="xref py py-meth docutils literal"><span class="pre">play()</span></tt></a> method.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -259,7 +260,7 @@ saved, the associated configuration is included.</p>
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
         <li class="right" >
-          <a href="faq.html" title="FAQ"
+          <a href="utils.html" title="abrupt.utils - Miscellaneous functions"
              >next</a> |</li>
         <li class="right" >
           <a href="session.html" title="abrupt.session - Session handler"
